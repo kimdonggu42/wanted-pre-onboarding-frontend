@@ -11,28 +11,33 @@ const TodoWrapper = styled.li`
   border-bottom: 1px solid #ebebeb;
 `;
 
+const Label = styled.label`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+`;
+
 const Checkbox = styled.input`
   min-width: 15px;
   min-height: 15px;
+  cursor: pointer;
 `;
 
-const TextArea = styled.label`
-  display: flex;
-  align-items: center;
+const TodoBodyInput = styled.input`
+  padding: 7px 5px 7px 5px;
+  border-radius: 4px;
+  border: none;
   width: 100%;
-  font-size: 15px;
   margin: 0 10px 0 10px;
+  outline: 1px solid lightgray;
+`;
 
-  > .editTodo {
-    padding: 7px 5px 7px 5px;
-    border-radius: 4px;
-    border: solid 1px lightgray;
-    width: 100%;
-  }
-
-  > .todoBody {
-    word-break: break-all;
-  }
+const TodoBody = styled.div`
+  font-size: 15px;
+  width: 100%;
+  margin: 0 10px 0 10px;
+  word-break: break-all;
 `;
 
 const ButtonArea = styled.div`
@@ -65,7 +70,7 @@ const DeleteOrCancelBtn = styled.button`
 `;
 
 function TodoList({ list, getTodoData }: any) {
-  const [editEditTodoInput, setEditEditTodoInput] = useState(list.todo);
+  const [editEditTodoInput, setEditTodoInput] = useState(list.todo);
   const [isEditBtnClick, setIsEditBtnClick] = useState(false);
 
   const updateEditTodoInput = async (id: number) => {
@@ -96,23 +101,29 @@ function TodoList({ list, getTodoData }: any) {
   const onChangeEditEditTodoInput = (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
-    setEditEditTodoInput(e.target.value);
+    setEditTodoInput(e.target.value);
   };
 
-  const onClickEditBtn = () => {
+  const changeEditModeBtn = () => {
     setIsEditBtnClick(!isEditBtnClick);
+  };
+
+  const editModeCancelBtn = () => {
+    setIsEditBtnClick(!isEditBtnClick);
+    setEditTodoInput(list.todo);
   };
 
   return (
     <TodoWrapper>
-      <Checkbox
-        type="checkbox"
-        checked={list.isCompleted}
-        onChange={() => updateTodoCheck(list.id)}
-      />
-      <TextArea>
+      <Label htmlFor={`todo-${list.id}`}>
+        <Checkbox
+          id={`todo-${list.id}`}
+          type="checkbox"
+          checked={list.isCompleted}
+          onChange={() => updateTodoCheck(list.id)}
+        />
         {isEditBtnClick ? (
-          <input
+          <TodoBodyInput
             className="editTodo"
             data-testid="modify-input"
             type="text"
@@ -120,9 +131,9 @@ function TodoList({ list, getTodoData }: any) {
             onChange={onChangeEditEditTodoInput}
           />
         ) : (
-          <div className="todoBody">{list.todo}</div>
+          <TodoBody className="todoBody">{list.todo}</TodoBody>
         )}
-      </TextArea>
+      </Label>
       <ButtonArea>
         {isEditBtnClick ? (
           <EditOrSubmitBtn
@@ -136,7 +147,7 @@ function TodoList({ list, getTodoData }: any) {
           <EditOrSubmitBtn
             className="trueBtn"
             data-testid="modify-button"
-            onClick={onClickEditBtn}
+            onClick={changeEditModeBtn}
           >
             수정
           </EditOrSubmitBtn>
@@ -145,7 +156,7 @@ function TodoList({ list, getTodoData }: any) {
           <DeleteOrCancelBtn
             className="falseBtn"
             data-testid="cancel-button"
-            onClick={onClickEditBtn}
+            onClick={editModeCancelBtn}
           >
             취소
           </DeleteOrCancelBtn>

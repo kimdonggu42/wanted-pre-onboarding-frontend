@@ -58,7 +58,8 @@ const TodoInput = styled.input`
 
 const TodoCreateBtn = styled.button`
   position: absolute;
-  font-weight: 500;
+  font-size: 15px;
+  font-weight: 600;
   right: 17px;
   padding: 5px 10px 5px 10px;
   background-color: transparent;

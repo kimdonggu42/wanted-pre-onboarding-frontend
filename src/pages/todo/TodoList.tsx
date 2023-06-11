@@ -21,6 +21,7 @@ const Label = styled.label`
 const Checkbox = styled.input`
   min-width: 15px;
   min-height: 15px;
+  accent-color: ${(props) => props.theme.color.mainColor};
   cursor: pointer;
 `;
 
@@ -59,13 +60,13 @@ const ButtonArea = styled.div`
 
 const EditOrSubmitBtn = styled.button`
   color: white;
-  outline: 1px solid #645cbb;
-  background-color: #645cbb;
+  outline: 1px solid ${(props) => props.theme.color.mainColor};
+  background-color: ${(props) => props.theme.color.mainColor};
 `;
 
 const DeleteOrCancelBtn = styled.button`
-  color: #645cbb;
-  outline: 1.5px solid #645cbb;
+  color: ${(props) => props.theme.color.mainColor};
+  outline: 1.1px solid ${(props) => props.theme.color.mainColor};
   background-color: transparent;
 `;
 

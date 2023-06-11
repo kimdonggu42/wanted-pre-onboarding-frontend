@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { BASE_API } from '../util/api';
 
 const LoginContainer = styled.div`
-  height: 90vh;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -12,9 +12,9 @@ const LoginContainer = styled.div`
 `;
 
 const Logo = styled.div`
-  font-size: 33px;
+  font-size: 30px;
   font-weight: bolder;
-  margin-bottom: 30px;
+  margin-bottom: 20px;
 `;
 
 const FormContainer = styled.form`
@@ -22,8 +22,9 @@ const FormContainer = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 410px;
-  height: 250px;
+  padding: 30px;
+  width: 90vw;
+  max-width: 410px;
   border-radius: 4px;
   border: none;
   border: 1px solid lightgray;
@@ -31,7 +32,7 @@ const FormContainer = styled.form`
 
 const EmailInput = styled.input`
   font-size: 14px;
-  width: 350px;
+  width: 100%;
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
@@ -45,7 +46,7 @@ const EmailInput = styled.input`
 
 const PasswordInput = styled.input`
   font-size: 14px;
-  width: 350px;
+  width: 100%;
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
@@ -59,19 +60,19 @@ const PasswordInput = styled.input`
 `;
 
 const SigninBtn = styled.button`
-  width: 350px;
+  width: 100%;
   height: 45px;
   border: none;
   border-radius: 4px;
-  margin-top: 30px;
+  margin-top: 20px;
   color: white;
   font-size: 15px;
   font-weight: 600;
-  background-color: #645cbb;
+  background-color: ${(props) => props.theme.color.mainColor};
   cursor: pointer;
 
   &:hover {
-    background-color: #927fbf;
+    opacity: 0.8;
   }
 
   &:disabled {
@@ -81,7 +82,6 @@ const SigninBtn = styled.button`
 
 const MoveSignup = styled.button`
   font-size: 15px;
-  color: #22262c;
   margin-top: 20px;
   width: 410px;
   height: 60px;
@@ -94,6 +94,12 @@ const MoveSignup = styled.button`
   > .bold {
     font-weight: 600;
   }
+`;
+
+const ErrMessage = styled.div`
+  margin-top: 5px;
+  font-size: 14px;
+  color: ${(props) => props.theme.color.errColor};
 `;
 
 function Signin() {
@@ -156,7 +162,7 @@ function Signin() {
           value={email}
           placeholder="이메일을 입력해 주세요"
         />
-        {emailValid === false && <span>{emailErrMessage}</span>}
+        {emailValid === false && <ErrMessage>{emailErrMessage}</ErrMessage>}
         <PasswordInput
           data-testid="password-input"
           type="password"
@@ -164,7 +170,9 @@ function Signin() {
           value={password}
           placeholder="비밀번호를 입력해 주세요"
         />
-        {passwordValid === false && <span>{passwordErrMessage}</span>}
+        {passwordValid === false && (
+          <ErrMessage>{passwordErrMessage}</ErrMessage>
+        )}
         <SigninBtn
           data-testid="signin-button"
           type="submit"

@@ -1,8 +1,8 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
-import GlobalStyle from './assets/globalStyle';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
 import Todo from './pages/todo/Todo';
+import GlobalStyle from './style/globalStyle';
 function App() {
   const isLogin = localStorage.getItem('accessToken');
 

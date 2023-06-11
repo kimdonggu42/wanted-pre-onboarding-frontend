@@ -6,43 +6,31 @@ const TodoWrapper = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 45px;
+  min-height: 50px;
   list-style: none;
   border-bottom: 1px solid #ebebeb;
+`;
 
-  :last-child {
-    border-bottom: none;
-  }
+const Checkbox = styled.input`
+  min-width: 15px;
+  min-height: 15px;
 `;
 
 const TextArea = styled.label`
   display: flex;
   align-items: center;
-  flex: 8;
-  height: 30px;
-
-  > .checkBox {
-    margin-right: 20px;
-    cursor: pointer;
-  }
-
-  > input[type='checkbox'] {
-    width: 18px;
-    height: 18px;
-  }
+  width: 100%;
+  font-size: 15px;
+  margin: 0 10px 0 10px;
 
   > .editTodo {
-    font-size: 15px;
-    padding: 0px 5px 0px 5px;
+    padding: 7px 5px 7px 5px;
     border-radius: 4px;
-    border: solid 1px #22262c;
+    border: solid 1px lightgray;
     width: 100%;
-    height: 30px;
   }
 
-  > .todoContent {
-    width: 100%;
-    font-size: 15px;
+  > .todoBody {
     word-break: break-all;
   }
 `;
@@ -51,10 +39,7 @@ const ButtonArea = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  flex: 2;
-  height: 30px;
   column-gap: 10px;
-  margin-left: 10px;
 
   > button {
     width: 40px;
@@ -65,27 +50,27 @@ const ButtonArea = styled.div`
     border-radius: 4px;
     cursor: pointer;
   }
+`;
 
-  > .trueBtn {
-    color: white;
-    outline: 1px solid #645cbb;
-    background-color: #645cbb;
-  }
+const EditOrSubmitBtn = styled.button`
+  color: white;
+  outline: 1px solid #645cbb;
+  background-color: #645cbb;
+`;
 
-  > .falseBtn {
-    color: #645cbb;
-    outline: 1.5px solid #645cbb;
-    background-color: transparent;
-  }
+const DeleteOrCancelBtn = styled.button`
+  color: #645cbb;
+  outline: 1.5px solid #645cbb;
+  background-color: transparent;
 `;
 
 function TodoList({ list, getTodoData }: any) {
-  const [editTodoBody, setEditTodoBody] = useState(list.todo);
+  const [editEditTodoInput, setEditEditTodoInput] = useState(list.todo);
   const [isEditBtnClick, setIsEditBtnClick] = useState(false);
 
-  const updateTodoBody = async (id: number) => {
+  const updateEditTodoInput = async (id: number) => {
     const editTodo = {
-      todo: editTodoBody,
+      todo: editEditTodoInput,
       isCompleted: list.isCompleted,
     };
     await TOKEN_API.put(`/todos/${id}`, editTodo);
@@ -108,8 +93,10 @@ function TodoList({ list, getTodoData }: any) {
     getTodoData();
   };
 
-  const onChangeEditTodoBody = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditTodoBody(e.target.value);
+  const onChangeEditEditTodoInput = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setEditEditTodoInput(e.target.value);
   };
 
   const onClickEditBtn = () => {
@@ -118,59 +105,58 @@ function TodoList({ list, getTodoData }: any) {
 
   return (
     <TodoWrapper>
+      <Checkbox
+        type="checkbox"
+        checked={list.isCompleted}
+        onChange={() => updateTodoCheck(list.id)}
+      />
       <TextArea>
-        <input
-          className="checkBox"
-          type="checkbox"
-          checked={list.isCompleted}
-          onChange={() => updateTodoCheck(list.id)}
-        />
         {isEditBtnClick ? (
           <input
             className="editTodo"
             data-testid="modify-input"
             type="text"
-            value={editTodoBody}
-            onChange={onChangeEditTodoBody}
+            value={editEditTodoInput}
+            onChange={onChangeEditEditTodoInput}
           />
         ) : (
-          <span className="todoContent">{list.todo}</span>
+          <div className="todoBody">{list.todo}</div>
         )}
       </TextArea>
       <ButtonArea>
         {isEditBtnClick ? (
-          <button
+          <EditOrSubmitBtn
             className="trueBtn"
             data-testid="submit-button"
-            onClick={() => updateTodoBody(list.id)}
+            onClick={() => updateEditTodoInput(list.id)}
           >
             제출
-          </button>
+          </EditOrSubmitBtn>
         ) : (
-          <button
+          <EditOrSubmitBtn
             className="trueBtn"
             data-testid="modify-button"
             onClick={onClickEditBtn}
           >
             수정
-          </button>
+          </EditOrSubmitBtn>
         )}
         {isEditBtnClick ? (
-          <button
+          <DeleteOrCancelBtn
             className="falseBtn"
             data-testid="cancel-button"
             onClick={onClickEditBtn}
           >
             취소
-          </button>
+          </DeleteOrCancelBtn>
         ) : (
-          <button
+          <DeleteOrCancelBtn
             className="falseBtn"
             data-testid="delete-button"
             onClick={() => deleteTodo(list.id)}
           >
             삭제
-          </button>
+          </DeleteOrCancelBtn>
         )}
       </ButtonArea>
     </TodoWrapper>

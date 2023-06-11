@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { FiLogOut } from 'react-icons/fi';
 import styled from 'styled-components';
 import { TOKEN_API } from '../../util/api';
 import { TodoType } from '../../util/type';
@@ -19,9 +20,16 @@ const TodoArea = styled.div`
 `;
 
 const TodoTitle = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   font-size: 30px;
   font-weight: 600;
   margin: 10px 0 20px 0;
+
+  > .logoutBtn {
+    cursor: pointer;
+  }
 `;
 
 const TodoInputArea = styled.div`
@@ -58,6 +66,14 @@ const TodoCreateBtn = styled.button`
   cursor: pointer;
 `;
 
+const TodoListArea = styled.ul`
+  list-style: none;
+
+  :last-child {
+    border-bottom: none;
+  }
+`;
+
 function TodoMain() {
   const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
@@ -87,10 +103,18 @@ function TodoMain() {
     }
   };
 
+  const logOut = () => {
+    localStorage.removeItem('accessToken');
+    window.location.reload();
+  };
+
   return (
     <TodoContainer>
       <TodoArea>
-        <TodoTitle>TODO LIST</TodoTitle>
+        <TodoTitle>
+          <span>TODO LIST</span>
+          <FiLogOut className="logoutBtn" size={21} onClick={logOut} />
+        </TodoTitle>
         <TodoInputArea>
           <TodoInput
             className="todoInput"
@@ -107,13 +131,13 @@ function TodoMain() {
             추가
           </TodoCreateBtn>
         </TodoInputArea>
-        <ul>
+        <TodoListArea>
           {reverseTodoData.map((value) => {
             return (
               <TodoList list={value} key={value.id} getTodoData={getTodoData} />
             );
           })}
-        </ul>
+        </TodoListArea>
       </TodoArea>
     </TodoContainer>
   );

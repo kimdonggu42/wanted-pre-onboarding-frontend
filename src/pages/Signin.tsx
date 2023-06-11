@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import { BASE_API } from '../util/api';
 
@@ -106,8 +106,6 @@ function Signin() {
   const [emailErrMessage, setEmaiErrMessage] = useState<string>('');
   const [passwordErrMessage, setPasswordErrMessage] = useState<string>('');
 
-  const navigate = useNavigate();
-
   const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
     if (e.target.value.includes('@')) {
@@ -140,7 +138,6 @@ function Signin() {
         if (res.data.access_token) {
           localStorage.setItem('accessToken', res.data.access_token);
         }
-        navigate('/todo');
         window.location.reload();
       }
     } catch (err) {

@@ -1,144 +1,56 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
-import { BASE_API } from '../util/api';
-
-const LoginContainer = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-const Logo = styled.div`
-  font-size: 30px;
-  font-weight: bolder;
-  margin-bottom: 20px;
-`;
-
-const FormContainer = styled.form`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 30px;
-  width: 90vw;
-  max-width: 410px;
-  border-radius: 4px;
-  border: none;
-  border: 1px solid lightgray;
-`;
-
-const EmailInput = styled.input`
-  font-size: 14px;
-  width: 100%;
-  height: 50px;
-  border-radius: 4px;
-  padding: 10px 8px 10px 8px;
-  border: none;
-  border: 1px solid lightgray;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const PasswordInput = styled.input`
-  font-size: 14px;
-  width: 100%;
-  height: 50px;
-  border-radius: 4px;
-  padding: 10px 8px 10px 8px;
-  margin-top: 10px;
-  border: none;
-  border: 1px solid lightgray;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-const SigninBtn = styled.button`
-  width: 100%;
-  height: 45px;
-  border: none;
-  border-radius: 4px;
-  margin-top: 20px;
-  color: white;
-  font-size: 15px;
-  font-weight: 600;
-  background-color: ${(props) => props.theme.color.mainColor};
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.8;
-  }
-
-  &:disabled {
-    background-color: lightgray;
-  }
-`;
-
-const MoveSignup = styled.button`
-  font-size: 15px;
-  margin-top: 20px;
-  width: 410px;
-  height: 60px;
-  border-radius: 4px;
-  border: none;
-  border: 1px solid lightgray;
-  background-color: transparent;
-  cursor: pointer;
-
-  > .bold {
-    font-weight: 600;
-  }
-`;
-
-const ErrMessage = styled.div`
-  margin-top: 5px;
-  font-size: 14px;
-  color: ${(props) => props.theme.color.errColor};
-`;
+import { BASE_API } from '../util/instance';
+import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
+import * as Signup from './Signup';
 
 function Signin() {
-  const [email, setEmail] = useState<string>('');
-  const [password, setPassword] = useState<string>('');
+  const [formValue, setFormValue] = useState<FormValueType>({
+    email: '',
+    password: '',
+  });
+  const [formValid, setFormValid] = useState<FormValidType>({
+    emailValid: false,
+    passwordValid: false,
+  });
+  const [formErrMessage, setFormErrMessage] = useState<FormErrMessageType>({
+    emailErrMessage: '',
+    passwordErrMessage: '',
+  });
 
-  const [emailValid, setEmailValid] = useState<boolean>(false);
-  const [passwordValid, setPasswordValid] = useState<boolean>(false);
-
-  const [emailErrMessage, setEmaiErrMessage] = useState<string>('');
-  const [passwordErrMessage, setPasswordErrMessage] = useState<string>('');
-
-  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.target.value);
-    if (e.target.value.includes('@')) {
-      setEmailValid(true);
-    } else {
-      setEmailValid(false);
-      setEmaiErrMessage('올바르지 않은 이메일 형식입니다.');
-    }
-  };
-
-  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPassword(e.target.value);
-    if (e.target.value.length >= 8) {
-      setPasswordValid(true);
-    } else {
-      setPasswordValid(false);
-      setPasswordErrMessage('비밀번호는 8자 이상이어야 합니다.');
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.type === 'email') {
+      setFormValue({ ...formValue, email: e.target.value });
+      if (e.target.value.includes('@')) {
+        setFormValid({ ...formValid, emailValid: true });
+      } else {
+        setFormValid({ ...formValid, emailValid: false });
+        setFormErrMessage({
+          ...formErrMessage,
+          emailErrMessage: '올바르지 않은 이메일 형식입니다.',
+        });
+      }
+    } else if (e.target.type === 'password') {
+      setFormValue({ ...formValue, password: e.target.value });
+      if (e.target.value.length >= 8) {
+        setFormValid({ ...formValid, passwordValid: true });
+      } else {
+        setFormValid({ ...formValid, passwordValid: false });
+        setFormErrMessage({
+          ...formErrMessage,
+          passwordErrMessage: '비밀번호는 8자 이상이어야 합니다.',
+        });
+      }
     }
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      if (emailValid && passwordValid) {
+      if (formValid.emailValid && formValid.passwordValid) {
         const signInForm = {
-          email,
-          password,
+          email: formValue.email,
+          password: formValue.password,
         };
         const res = await BASE_API.post(`/auth/signin`, signInForm);
         if (res.data.access_token) {
@@ -151,42 +63,52 @@ function Signin() {
     }
   };
 
+  console.log(formValue);
+
   return (
-    <LoginContainer>
-      <Logo>로그인</Logo>
-      <FormContainer onSubmit={handleSubmit}>
-        <EmailInput
+    <Signup.FormContainer>
+      <Signup.FormName>로그인</Signup.FormName>
+      <Signup.Form onSubmit={handleSubmit}>
+        <Signup.EmailInput
           data-testid="email-input"
           type="email"
-          onChange={onChangeEmail}
-          value={email}
+          value={formValue.email}
           placeholder="이메일을 입력해 주세요"
+          onChange={onChangeInput}
         />
-        {emailValid === false && <ErrMessage>{emailErrMessage}</ErrMessage>}
-        <PasswordInput
+        {formValid.emailValid === false && (
+          <Signup.ErrMessage>
+            {formErrMessage.emailErrMessage}
+          </Signup.ErrMessage>
+        )}
+        <Signup.PasswordInput
           data-testid="password-input"
           type="password"
-          onChange={onChangePassword}
-          value={password}
+          value={formValue.password}
           placeholder="비밀번호를 입력해 주세요"
+          onChange={onChangeInput}
         />
-        {passwordValid === false && (
-          <ErrMessage>{passwordErrMessage}</ErrMessage>
+        {formValid.passwordValid === false && (
+          <Signup.ErrMessage>
+            {formErrMessage.passwordErrMessage}
+          </Signup.ErrMessage>
         )}
-        <SigninBtn
+        <Signup.SubmitBtn
           data-testid="signin-button"
           type="submit"
-          disabled={emailValid === false || passwordValid === false}
+          disabled={
+            formValid.emailValid === false || formValid.passwordValid === false
+          }
         >
           로그인
-        </SigninBtn>
-      </FormContainer>
+        </Signup.SubmitBtn>
+      </Signup.Form>
       <Link to="/signup">
-        <MoveSignup>
+        <Signup.MoveBtn>
           계정이 없으신가요? <span className="bold">가입하기</span>
-        </MoveSignup>
+        </Signup.MoveBtn>
       </Link>
-    </LoginContainer>
+    </Signup.FormContainer>
   );
 }
 

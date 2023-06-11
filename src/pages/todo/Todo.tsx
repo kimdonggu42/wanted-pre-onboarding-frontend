@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import styled from 'styled-components';
-import { TOKEN_API } from '../../util/api';
+import { TOKEN_API } from '../../util/instance';
 import { TodoType } from '../../util/type';
 import TodoList from './TodoList';
 
@@ -79,7 +79,7 @@ function TodoMain() {
   const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
 
-  const reverseTodoData = todoData.sort((a, b) => b.id - a.id);
+  const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
 
   const getTodoData = async () => {
     const res = await TOKEN_API.get('/todos');
@@ -113,7 +113,7 @@ function TodoMain() {
     <TodoContainer>
       <TodoArea>
         <TodoTitle>
-          <span>TODO LIST</span>
+          TODO LIST
           <FiLogOut className="logoutBtn" size={21} onClick={logOut} />
         </TodoTitle>
         <TodoInputArea>

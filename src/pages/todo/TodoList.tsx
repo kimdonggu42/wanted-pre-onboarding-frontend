@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TOKEN_API } from '../../util/api';
+import { TOKEN_API } from '../../util/instance';
+import { TodoTypeProps } from '../../util/type';
 
-const TodoWrapper = styled.li`
+const TodoItem = styled.li`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -70,9 +71,9 @@ const DeleteOrCancelBtn = styled.button`
   background-color: transparent;
 `;
 
-function TodoList({ list, getTodoData }: any) {
-  const [editEditTodoInput, setEditTodoInput] = useState(list.todo);
-  const [isEditBtnClick, setIsEditBtnClick] = useState(false);
+function TodoList({ list, getTodoData }: TodoTypeProps) {
+  const [editEditTodoInput, setEditTodoInput] = useState<string>(list.todo);
+  const [isEditBtnClick, setIsEditBtnClick] = useState<boolean>(false);
 
   const updateEditTodoInput = async (id: number) => {
     const editTodo = {
@@ -91,7 +92,6 @@ function TodoList({ list, getTodoData }: any) {
     };
     await TOKEN_API.put(`/todos/${id}`, editTodo);
     getTodoData();
-    setIsEditBtnClick(false);
   };
 
   const deleteTodo = async (id: number) => {
@@ -115,7 +115,7 @@ function TodoList({ list, getTodoData }: any) {
   };
 
   return (
-    <TodoWrapper>
+    <TodoItem>
       <Label htmlFor={`todo-${list.id}`}>
         <Checkbox
           id={`todo-${list.id}`}
@@ -171,7 +171,7 @@ function TodoList({ list, getTodoData }: any) {
           </DeleteOrCancelBtn>
         )}
       </ButtonArea>
-    </TodoWrapper>
+    </TodoItem>
   );
 }
 

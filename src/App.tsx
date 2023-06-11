@@ -4,7 +4,7 @@ import Signup from './pages/Signup';
 import Todo from './pages/todo/Todo';
 import GlobalStyle from './style/globalStyle';
 function App() {
-  const isLogin = localStorage.getItem('accessToken');
+  const isLogin: string | null = localStorage.getItem('accessToken');
 
   return (
     <div className="App">

@@ -103,23 +103,28 @@ function Signup() {
   const [emailValid, setEmailValid] = useState<boolean>(false);
   const [passwordValid, setPasswordValid] = useState<boolean>(false);
 
+  const [emailErrMessage, setEmaiErrMessage] = useState<string>('');
+  const [passwordErrMessage, setPasswordErrMessage] = useState<string>('');
+
   const navigate = useNavigate();
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    if (email.includes('@')) {
+    if (e.target.value.includes('@')) {
       setEmailValid(true);
     } else {
       setEmailValid(false);
+      setEmaiErrMessage('올바르지 않은 이메일 형식입니다.');
     }
   };
 
-  const handleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    if (password.length >= 8) {
+    if (e.target.value.length >= 8) {
       setPasswordValid(true);
     } else {
       setPasswordValid(false);
+      setPasswordErrMessage('비밀번호는 8자 이상이어야 합니다.');
     }
   };
 
@@ -132,7 +137,7 @@ function Signup() {
           password,
         };
         await BASE_API.post(`/auth/signup`, signUpForm);
-        navigate('/signin');
+        navigate('/');
       }
     } catch (err) {
       console.error(err);
@@ -145,27 +150,29 @@ function Signup() {
       <FormContainer onSubmit={handleSubmit}>
         <EmailInput
           data-testid="email-input"
-          type="text"
+          type="email"
           value={email}
           placeholder="이메일을 입력해 주세요"
-          onChange={handleChangeEmail}
+          onChange={onChangeEmail}
         />
+        {emailValid === false && <span>{emailErrMessage}</span>}
         <PasswordInput
           data-testid="password-input"
           type="password"
           value={password}
           placeholder="비밀번호를 입력해 주세요"
-          onChange={handleChangePassword}
+          onChange={onChangePassword}
         />
+        {passwordValid === false && <span>{passwordErrMessage}</span>}
         <SignupBtn
           data-testid="signup-button"
           type="submit"
-          disabled={!email.includes('@') || password.length < 8}
+          disabled={emailValid === false || passwordValid === false}
         >
           회원가입
         </SignupBtn>
       </FormContainer>
-      <Link to="/signin">
+      <Link to="/">
         <MoveSignin>
           계정이 있으신가요? <span className="bold">로그인</span>
         </MoveSignin>

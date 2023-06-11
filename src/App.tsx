@@ -2,8 +2,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import GlobalStyle from './assets/globalStyle';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import Todo from './pages/Todo';
-
+import Todo from './pages/todo/Todo';
 function App() {
   const isLogin = localStorage.getItem('accessToken');
 
@@ -14,16 +13,18 @@ function App() {
         <Route
           path="/"
           element={
-            isLogin ? <Todo /> : <Navigate to="/signin" replace={true} />
+            isLogin ? <Navigate to="/todo" replace={true} /> : <Signin />
           }
         />
         <Route
-          path="/signin"
-          element={isLogin ? <Navigate to="/" replace={true} /> : <Signin />}
+          path="/signup"
+          element={
+            isLogin ? <Navigate to="/todo" replace={true} /> : <Signup />
+          }
         />
         <Route
-          path="/signup"
-          element={isLogin ? <Navigate to="/" replace={true} /> : <Signup />}
+          path="/todo"
+          element={isLogin ? <Todo /> : <Navigate to="/" replace={true} />}
         />
       </Routes>
     </div>

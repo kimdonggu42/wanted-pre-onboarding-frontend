@@ -15,11 +15,6 @@ const Logo = styled.div`
   font-size: 33px;
   font-weight: bolder;
   margin-bottom: 30px;
-
-  a {
-    color: #22262c;
-    text-decoration: none;
-  }
 `;
 
 const FormContainer = styled.form`
@@ -102,29 +97,34 @@ const MoveSignup = styled.button`
 `;
 
 function Signin() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const [emailValid, setEmailValid] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
+  const [emailValid, setEmailValid] = useState<boolean>(false);
+  const [passwordValid, setPasswordValid] = useState<boolean>(false);
+
+  const [emailErrMessage, setEmaiErrMessage] = useState<string>('');
+  const [passwordErrMessage, setPasswordErrMessage] = useState<string>('');
 
   const navigate = useNavigate();
 
-  const handleChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangeEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmail(e.target.value);
-    if (email.includes('@')) {
+    if (e.target.value.includes('@')) {
       setEmailValid(true);
     } else {
       setEmailValid(false);
+      setEmaiErrMessage('올바르지 않은 이메일 형식입니다.');
     }
   };
 
-  const HandleChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const onChangePassword = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPassword(e.target.value);
-    if (password.length >= 8) {
+    if (e.target.value.length >= 8) {
       setPasswordValid(true);
     } else {
       setPasswordValid(false);
+      setPasswordErrMessage('비밀번호는 8자 이상이어야 합니다.');
     }
   };
 
@@ -140,7 +140,8 @@ function Signin() {
         if (res.data.access_token) {
           localStorage.setItem('accessToken', res.data.access_token);
         }
-        navigate('/');
+        navigate('/todo');
+        window.location.reload();
       }
     } catch (err) {
       console.error(err);
@@ -153,22 +154,24 @@ function Signin() {
       <FormContainer onSubmit={handleSubmit}>
         <EmailInput
           data-testid="email-input"
-          type="text"
-          onChange={handleChangeEmail}
+          type="email"
+          onChange={onChangeEmail}
           value={email}
           placeholder="이메일을 입력해 주세요"
         />
+        {emailValid === false && <span>{emailErrMessage}</span>}
         <PasswordInput
           data-testid="password-input"
           type="password"
-          onChange={HandleChangePassword}
+          onChange={onChangePassword}
           value={password}
           placeholder="비밀번호를 입력해 주세요"
         />
+        {passwordValid === false && <span>{passwordErrMessage}</span>}
         <SigninBtn
           data-testid="signin-button"
           type="submit"
-          disabled={!email.includes('@') || password.length < 8}
+          disabled={emailValid === false || passwordValid === false}
         >
           로그인
         </SigninBtn>

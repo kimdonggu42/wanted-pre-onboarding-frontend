@@ -13,6 +13,15 @@ export interface FormErrMessageType {
   passwordErrMessage: string;
 }
 
+export interface AuthFormTypeProps {
+  formValue: FormValueType;
+  formValid: FormValidType;
+  formErrMessage: FormErrMessageType;
+  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
+  submitBtnName: string;
+}
+
 export interface TodoType {
   id: number;
   todo: string;

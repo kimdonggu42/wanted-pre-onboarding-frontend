@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import AuthForm from '../components/AuthForm';
 import { useSignin } from '../hooks/useSignin';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
 import * as Signup from './Signup';
@@ -59,41 +60,14 @@ function Signin() {
   return (
     <Signup.FormContainer>
       <Signup.FormName>로그인</Signup.FormName>
-      <Signup.Form onSubmit={handleSubmit}>
-        <Signup.EmailInput
-          data-testid="email-input"
-          type="email"
-          value={formValue.email}
-          placeholder="이메일을 입력해 주세요"
-          onChange={onChangeInput}
-        />
-        {formValid.emailValid === false && (
-          <Signup.ErrMessage>
-            {formErrMessage.emailErrMessage}
-          </Signup.ErrMessage>
-        )}
-        <Signup.PasswordInput
-          data-testid="password-input"
-          type="password"
-          value={formValue.password}
-          placeholder="비밀번호를 입력해 주세요"
-          onChange={onChangeInput}
-        />
-        {formValid.passwordValid === false && (
-          <Signup.ErrMessage>
-            {formErrMessage.passwordErrMessage}
-          </Signup.ErrMessage>
-        )}
-        <Signup.SubmitBtn
-          data-testid="signin-button"
-          type="submit"
-          disabled={
-            formValid.emailValid === false || formValid.passwordValid === false
-          }
-        >
-          로그인
-        </Signup.SubmitBtn>
-      </Signup.Form>
+      <AuthForm
+        formValue={formValue}
+        formValid={formValid}
+        formErrMessage={formErrMessage}
+        onChangeInput={onChangeInput}
+        handleSubmit={handleSubmit}
+        submitBtnName={'로그인'}
+      />
       <Link to="/signup">
         <Signup.MoveBtn>
           계정이 없으신가요? <span className="bold">가입하기</span>

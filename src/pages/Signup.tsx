@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import { BASE_API } from '../util/instance';
+import { useSignup } from '../hooks/useSignup';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
 
 export const FormContainer = styled.div`
@@ -117,7 +117,7 @@ function Signup() {
     passwordErrMessage: '',
   });
 
-  const navigate = useNavigate();
+  const { signup } = useSignup();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'email') {
@@ -147,18 +147,12 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (formValid.emailValid && formValid.passwordValid) {
-        const signUpForm = {
-          email: formValue.email,
-          password: formValue.password,
-        };
-        await BASE_API.post(`/auth/signup`, signUpForm);
-        navigate('/');
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    signup(
+      formValue.email,
+      formValue.password,
+      formValid.emailValid,
+      formValid.passwordValid
+    );
   };
 
   return (

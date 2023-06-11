@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { BASE_API } from '../util/instance';
+import { useSignin } from '../hooks/useSignin';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
 import * as Signup from './Signup';
 
@@ -17,6 +17,8 @@ function Signin() {
     emailErrMessage: '',
     passwordErrMessage: '',
   });
+
+  const { signin } = useSignin();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'email') {
@@ -46,24 +48,13 @@ function Signin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    try {
-      if (formValid.emailValid && formValid.passwordValid) {
-        const signInForm = {
-          email: formValue.email,
-          password: formValue.password,
-        };
-        const res = await BASE_API.post(`/auth/signin`, signInForm);
-        if (res.data.access_token) {
-          localStorage.setItem('accessToken', res.data.access_token);
-        }
-        window.location.reload();
-      }
-    } catch (err) {
-      console.error(err);
-    }
+    signin(
+      formValue.email,
+      formValue.password,
+      formValid.emailValid,
+      formValid.passwordValid
+    );
   };
-
-  console.log(formValue);
 
   return (
     <Signup.FormContainer>

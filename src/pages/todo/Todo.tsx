@@ -8,11 +8,20 @@ const TodoContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100vw;
+  height: 100vh;
 `;
 
 const TodoArea = styled.div`
   width: 100vw;
-  max-width: 600px;
+  max-width: 700px;
+  padding: 20px;
+`;
+
+const TodoTitle = styled.div`
+  font-size: 30px;
+  font-weight: 600;
+  margin: 10px 0 20px 0;
 `;
 
 const TodoInputArea = styled.div`
@@ -24,53 +33,36 @@ const TodoInputArea = styled.div`
   position: relative;
 `;
 
-const InputText = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 9.5;
+const TodoInput = styled.input`
+  font-size: 15px;
+  padding: 0px 70px 0px 15px;
+  border-radius: 50px;
+  border: none;
+  width: 100%;
+  height: 40px;
+  box-shadow: 0px 0px 5px lightgray;
 
-  > input {
-    font-size: 15px;
-    padding: 0px 55px 0px 15px;
-    border-radius: 50px;
-    border: none;
-    width: 100%;
-    height: 40px;
-    box-shadow: 0px 0px 5px lightgray;
-
-    > input[type='checkbox'] {
-      width: 50px;
-    }
-
-    &:focus {
-      outline: none;
-      border: solid 1px lightgray;
-    }
+  &:focus {
+    outline: none;
+    border: solid 1px lightgray;
   }
 `;
 
-const TodoPostBtn = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex: 1;
+const TodoCreateBtn = styled.button`
   position: absolute;
-  right: 20px;
-
-  > button {
-    color: #22262c;
-    display: flex;
-    align-items: center;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
+  font-weight: 500;
+  right: 17px;
+  padding: 5px 10px 5px 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
 `;
 
 function TodoMain() {
   const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
+
+  const reverseTodoData = todoData.sort((a, b) => b.id - a.id);
 
   const getTodoData = async () => {
     const res = await TOKEN_API.get('/todos');
@@ -98,23 +90,25 @@ function TodoMain() {
   return (
     <TodoContainer>
       <TodoArea>
+        <TodoTitle>TODO LIST</TodoTitle>
         <TodoInputArea>
-          <InputText>
-            <input
-              className="todoInput"
-              data-testid="new-todo-input"
-              placeholder="할 일을 입력해 주세요."
-              onChange={onChangeTodoBody}
-            />
-          </InputText>
-          <TodoPostBtn>
-            <button data-testid="new-todo-add-button" onClick={addTodoText}>
-              추가
-            </button>
-          </TodoPostBtn>
+          <TodoInput
+            className="todoInput"
+            data-testid="new-todo-input"
+            placeholder="할 일을 입력해 주세요."
+            value={todoBody}
+            onChange={onChangeTodoBody}
+          />
+
+          <TodoCreateBtn
+            data-testid="new-todo-add-button"
+            onClick={addTodoText}
+          >
+            추가
+          </TodoCreateBtn>
         </TodoInputArea>
         <ul>
-          {todoData.map((value) => {
+          {reverseTodoData.map((value) => {
             return (
               <TodoList list={value} key={value.id} getTodoData={getTodoData} />
             );

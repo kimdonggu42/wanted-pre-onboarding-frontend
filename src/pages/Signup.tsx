@@ -97,11 +97,11 @@ const MoveSignin = styled.button`
 `;
 
 function Signup() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
 
-  const [emailValid, setEmailValid] = useState(false);
-  const [passwordValid, setPasswordValid] = useState(false);
+  const [emailValid, setEmailValid] = useState<boolean>(false);
+  const [passwordValid, setPasswordValid] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
@@ -159,7 +159,7 @@ function Signup() {
         />
         <SignupBtn
           data-testid="signup-button"
-          type="button"
+          type="submit"
           disabled={!email.includes('@') || password.length < 8}
         >
           회원가입

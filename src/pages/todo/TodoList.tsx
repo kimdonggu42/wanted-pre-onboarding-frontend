@@ -76,27 +76,39 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
   const [isEditBtnClick, setIsEditBtnClick] = useState<boolean>(false);
 
   const updateEditTodoInput = async (id: number) => {
-    const editTodo = {
-      todo: editEditTodoInput,
-      isCompleted: list.isCompleted,
-    };
-    await TOKEN_API.put(`/todos/${id}`, editTodo);
-    getTodoData();
+    try {
+      const editTodo = {
+        todo: editEditTodoInput,
+        isCompleted: list.isCompleted,
+      };
+      await TOKEN_API.put(`/todos/${id}`, editTodo);
+      getTodoData();
+    } catch (err) {
+      console.error(err);
+    }
     setIsEditBtnClick(false);
   };
 
   const updateTodoCheck = async (id: number) => {
-    const editTodo = {
-      todo: list.todo,
-      isCompleted: !list.isCompleted,
-    };
-    await TOKEN_API.put(`/todos/${id}`, editTodo);
-    getTodoData();
+    try {
+      const editTodo = {
+        todo: list.todo,
+        isCompleted: !list.isCompleted,
+      };
+      await TOKEN_API.put(`/todos/${id}`, editTodo);
+      getTodoData();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const deleteTodo = async (id: number) => {
-    await TOKEN_API.delete(`/todos/${id}`);
-    getTodoData();
+    try {
+      await TOKEN_API.delete(`/todos/${id}`);
+      getTodoData();
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onChangeEditEditTodoInput = (

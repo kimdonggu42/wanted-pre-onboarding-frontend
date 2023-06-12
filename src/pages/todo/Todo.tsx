@@ -82,8 +82,12 @@ function TodoMain() {
   const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
 
   const getTodoData = async () => {
-    const res = await TOKEN_API.get('/todos');
-    setTodoData(res.data);
+    try {
+      const res = await TOKEN_API.get('/todos');
+      setTodoData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
   };
   useEffect(() => {
     getTodoData();
@@ -94,13 +98,17 @@ function TodoMain() {
   };
 
   const addTodoText = async () => {
-    const newTodo = {
-      todo: todoBody,
-    };
-    if (todoBody) {
-      await TOKEN_API.post('/todos', newTodo);
-      getTodoData();
-      setTodoBody('');
+    try {
+      const newTodo = {
+        todo: todoBody,
+      };
+      if (todoBody) {
+        await TOKEN_API.post('/todos', newTodo);
+        getTodoData();
+        setTodoBody('');
+      }
+    } catch (err) {
+      console.error(err);
     }
   };
 

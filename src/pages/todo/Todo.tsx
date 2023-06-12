@@ -75,6 +75,13 @@ const TodoListArea = styled.ul`
   }
 `;
 
+const EmptyTodoWord = styled.div`
+  text-align: center;
+  font-weight: 500;
+  margin-top: 50px;
+  /* border: 1px solid red; */
+`;
+
 function TodoMain() {
   const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
@@ -136,11 +143,21 @@ function TodoMain() {
           </TodoAddBtn>
         </TodoInputArea>
         <TodoListArea>
-          {reverseTodoData.map((value) => {
-            return (
-              <TodoList list={value} key={value.id} getTodoData={getTodoData} />
-            );
-          })}
+          {todoData.length !== 0 ? (
+            <>
+              {reverseTodoData.map((value) => {
+                return (
+                  <TodoList
+                    list={value}
+                    key={value.id}
+                    getTodoData={getTodoData}
+                  />
+                );
+              })}
+            </>
+          ) : (
+            <EmptyTodoWord>아직 추가된 할 일이 없습니다.</EmptyTodoWord>
+          )}
         </TodoListArea>
       </TodoArea>
     </TodoContainer>

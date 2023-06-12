@@ -1,46 +1,28 @@
-# Getting Started with Create React App
+# 원티드 프리온보딩 프론트엔드 - 선발 과제
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 지원자
+- 이름 : 김동구
+- 이메일 : kdonggoo44gmail.com
 
-## Available Scripts
+## 배포링크
+- https://wanted-pre-onboarding-fr-f4427.web.app/
 
-In the project directory, you can run:
+## 프로젝트 실행 방법
+```
+git clone git@github.com:kimdonggu42/wanted-pre-onboarding-frontend.git
 
-### `npm start`
+cd wanted-pre-onboarding-frontend
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+npm install
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+npm run start
+```
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## 시연 영상
+|**회원가입 및 유효성 검사**|**로그인**|
+|:---:|:---:|
+|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/15eb758c-8a99-4232-9400-d5df04caa98b"/>|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/b4037b91-4926-4c9f-b77c-18538de8fab1"/>|
+|**로그인 상태가 아닐 때 `/todo` 경로 접근 차단**|**로그인 상태일 때 `/`, `/signup` 경로 접근 차단**|
+|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/55678aed-8c78-4011-82e2-f7f130b92608"/>|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/13db9f1d-b8fd-4c49-b921-f06085217d43"/>|
+|**todo 추가, 수정**|**todo 삭제 및 완료 처리**|
+|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/55678aed-8c78-4011-82e2-f7f130b92608"/>|<img width="360px" src="https://github.com/kimdonggu42/save-me/assets/115632555/13db9f1d-b8fd-4c49-b921-f06085217d43"/>|

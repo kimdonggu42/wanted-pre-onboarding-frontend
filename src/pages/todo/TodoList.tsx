@@ -77,16 +77,20 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
 
   const updateEditTodoInput = async (id: number) => {
     try {
-      const editTodo = {
-        todo: editEditTodoInput,
-        isCompleted: list.isCompleted,
-      };
-      await TOKEN_API.put(`/todos/${id}`, editTodo);
-      getTodoData();
+      if (editEditTodoInput.length !== 0) {
+        const editTodo = {
+          todo: editEditTodoInput,
+          isCompleted: list.isCompleted,
+        };
+        await TOKEN_API.put(`/todos/${id}`, editTodo);
+        getTodoData();
+        setIsEditBtnClick(false);
+      } else {
+        alert('수정할 내용이 비어있습니다.');
+      }
     } catch (err) {
       console.error(err);
     }
-    setIsEditBtnClick(false);
   };
 
   const updateTodoCheck = async (id: number) => {

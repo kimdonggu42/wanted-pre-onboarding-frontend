@@ -20,7 +20,11 @@ export const useSignup = () => {
         navigate('/');
       }
     } catch (err: any) {
-      alert(err.message);
+      if (err.response.status === 400) {
+        alert('이미 사용 중인 이메일입니다.');
+      } else {
+        alert(err.message);
+      }
     }
   };
 

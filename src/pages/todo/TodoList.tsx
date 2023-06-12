@@ -26,7 +26,7 @@ const Checkbox = styled.input`
   cursor: pointer;
 `;
 
-const TodoBodyInput = styled.input`
+const EditTodoBodyInput = styled.input`
   padding: 7px 5px 7px 5px;
   border-radius: 4px;
   border: none;
@@ -111,9 +111,7 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
     }
   };
 
-  const onChangeEditEditTodoInput = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const onChangeEditTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEditTodoInput(e.target.value);
   };
 
@@ -128,29 +126,27 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
 
   return (
     <TodoItem>
-      <Label htmlFor={`todo-${list.id}`}>
+      <Label htmlFor={`todo_${list.id}`}>
         <Checkbox
-          id={`todo-${list.id}`}
+          id={`todo_${list.id}`}
           type="checkbox"
           checked={list.isCompleted}
           onChange={() => updateTodoCheck(list.id)}
         />
         {isEditBtnClick ? (
-          <TodoBodyInput
-            className="editTodo"
+          <EditTodoBodyInput
             data-testid="modify-input"
             type="text"
             value={editEditTodoInput}
-            onChange={onChangeEditEditTodoInput}
+            onChange={onChangeEditTodoInput}
           />
         ) : (
-          <TodoBody className="todoBody">{list.todo}</TodoBody>
+          <TodoBody>{list.todo}</TodoBody>
         )}
       </Label>
       <ButtonArea>
         {isEditBtnClick ? (
           <EditOrSubmitBtn
-            className="trueBtn"
             data-testid="submit-button"
             onClick={() => updateEditTodoInput(list.id)}
           >
@@ -158,7 +154,6 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
           </EditOrSubmitBtn>
         ) : (
           <EditOrSubmitBtn
-            className="trueBtn"
             data-testid="modify-button"
             onClick={changeEditModeBtn}
           >
@@ -167,7 +162,6 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
         )}
         {isEditBtnClick ? (
           <DeleteOrCancelBtn
-            className="falseBtn"
             data-testid="cancel-button"
             onClick={editModeCancelBtn}
           >
@@ -175,7 +169,6 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
           </DeleteOrCancelBtn>
         ) : (
           <DeleteOrCancelBtn
-            className="falseBtn"
             data-testid="delete-button"
             onClick={() => deleteTodo(list.id)}
           >

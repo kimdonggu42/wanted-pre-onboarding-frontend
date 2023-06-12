@@ -56,7 +56,7 @@ const TodoInput = styled.input`
   }
 `;
 
-const TodoCreateBtn = styled.button`
+const TodoAddBtn = styled.button`
   position: absolute;
   font-size: 15px;
   font-weight: 600;
@@ -126,18 +126,14 @@ function TodoMain() {
         </TodoTitle>
         <TodoInputArea>
           <TodoInput
-            className="todoInput"
             data-testid="new-todo-input"
             placeholder="할 일을 입력해 주세요."
             value={todoBody}
             onChange={onChangeTodoBody}
           />
-          <TodoCreateBtn
-            data-testid="new-todo-add-button"
-            onClick={addTodoText}
-          >
+          <TodoAddBtn data-testid="new-todo-add-button" onClick={addTodoText}>
             추가
-          </TodoCreateBtn>
+          </TodoAddBtn>
         </TodoInputArea>
         <TodoListArea>
           {reverseTodoData.map((value) => {

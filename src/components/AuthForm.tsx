@@ -72,12 +72,41 @@ export const ErrMessage = styled.div`
 
 function AuthForm({
   formValue,
+  setFormValue,
   formValid,
+  setFormValid,
   formErrMessage,
-  onChangeInput,
+  setFormErrMessage,
   handleSubmit,
   submitBtnName,
+  dataTestId,
 }: AuthFormTypeProps) {
+  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.type === 'email') {
+      setFormValue({ ...formValue, email: e.target.value });
+      if (e.target.value.includes('@')) {
+        setFormValid({ ...formValid, emailValid: true });
+      } else {
+        setFormValid({ ...formValid, emailValid: false });
+        setFormErrMessage({
+          ...formErrMessage,
+          emailErrMessage: '올바르지 않은 이메일 형식입니다.',
+        });
+      }
+    } else if (e.target.type === 'password') {
+      setFormValue({ ...formValue, password: e.target.value });
+      if (e.target.value.length >= 8) {
+        setFormValid({ ...formValid, passwordValid: true });
+      } else {
+        setFormValid({ ...formValid, passwordValid: false });
+        setFormErrMessage({
+          ...formErrMessage,
+          passwordErrMessage: '비밀번호는 8자 이상이어야 합니다.',
+        });
+      }
+    }
+  };
+
   return (
     <Form onSubmit={handleSubmit}>
       <EmailInput
@@ -101,7 +130,7 @@ function AuthForm({
         <ErrMessage>{formErrMessage.passwordErrMessage}</ErrMessage>
       )}
       <SubmitBtn
-        data-testid="signup-button"
+        data-testid={dataTestId}
         type="submit"
         disabled={
           formValid.emailValid === false || formValid.passwordValid === false

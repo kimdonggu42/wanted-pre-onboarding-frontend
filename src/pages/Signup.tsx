@@ -51,32 +51,6 @@ function Signup() {
 
   const { signup } = useSignup();
 
-  const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type === 'email') {
-      setFormValue({ ...formValue, email: e.target.value });
-      if (e.target.value.includes('@')) {
-        setFormValid({ ...formValid, emailValid: true });
-      } else {
-        setFormValid({ ...formValid, emailValid: false });
-        setFormErrMessage({
-          ...formErrMessage,
-          emailErrMessage: '올바르지 않은 이메일 형식입니다.',
-        });
-      }
-    } else if (e.target.type === 'password') {
-      setFormValue({ ...formValue, password: e.target.value });
-      if (e.target.value.length >= 8) {
-        setFormValid({ ...formValid, passwordValid: true });
-      } else {
-        setFormValid({ ...formValid, passwordValid: false });
-        setFormErrMessage({
-          ...formErrMessage,
-          passwordErrMessage: '비밀번호는 8자 이상이어야 합니다.',
-        });
-      }
-    }
-  };
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     signup(
@@ -92,11 +66,14 @@ function Signup() {
       <FormName>회원가입</FormName>
       <AuthForm
         formValue={formValue}
+        setFormValue={setFormValue}
         formValid={formValid}
+        setFormValid={setFormValid}
         formErrMessage={formErrMessage}
-        onChangeInput={onChangeInput}
+        setFormErrMessage={setFormErrMessage}
         handleSubmit={handleSubmit}
         submitBtnName={'회원가입'}
+        dataTestId={'signup-button'}
       />
       <Link to="/">
         <MoveBtn>

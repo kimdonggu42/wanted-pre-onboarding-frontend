@@ -15,11 +15,14 @@ export interface FormErrMessageType {
 
 export interface AuthFormTypeProps {
   formValue: FormValueType;
+  setFormValue: React.Dispatch<React.SetStateAction<FormValueType>>;
   formValid: FormValidType;
+  setFormValid: React.Dispatch<React.SetStateAction<FormValidType>>;
   formErrMessage: FormErrMessageType;
-  onChangeInput: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  setFormErrMessage: React.Dispatch<React.SetStateAction<FormErrMessageType>>;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => Promise<void>;
   submitBtnName: string;
+  dataTestId: string;
 }
 
 export interface TodoType {

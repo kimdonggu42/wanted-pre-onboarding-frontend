@@ -124,7 +124,6 @@ function TodoMain() {
             value={todoBody}
             onChange={onChangeTodoBody}
           />
-
           <TodoCreateBtn
             data-testid="new-todo-add-button"
             onClick={addTodoText}

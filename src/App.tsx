@@ -26,6 +26,7 @@ function App() {
           path="/todo"
           element={isLogin ? <Todo /> : <Navigate to="/" replace={true} />}
         />
+        <Route path="*" element={<Navigate to="/" replace={true} />} />
       </Routes>
     </div>
   );

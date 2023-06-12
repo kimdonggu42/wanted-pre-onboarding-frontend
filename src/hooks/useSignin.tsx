@@ -20,7 +20,7 @@ export const useSignin = () => {
         window.location.reload();
       }
     } catch (err: any) {
-      if (err.response.status === 404) {
+      if (err.response.status === 401 || 404) {
         alert('이메일과 비밀번호를 다시 확인해 주세요.');
       } else {
         alert(err.message);

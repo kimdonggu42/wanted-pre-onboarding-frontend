@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+// Signup
 export const FormContainer = styled.div`
   height: 100vh;
   display: flex;
@@ -14,6 +15,23 @@ export const FormName = styled.div`
   margin-bottom: 20px;
 `;
 
+export const MoveBtn = styled.button`
+  font-size: 15px;
+  margin-top: 20px;
+  width: 410px;
+  height: 60px;
+  border-radius: 4px;
+  border: none;
+  border: 1px solid lightgray;
+  background-color: transparent;
+  cursor: pointer;
+
+  > .bold {
+    font-weight: 600;
+  }
+`;
+
+// Signin
 export const Form = styled.form`
   display: flex;
   flex-direction: column;
@@ -81,20 +99,4 @@ export const ErrMessage = styled.div`
   margin-top: 5px;
   font-size: 14px;
   color: ${(props) => props.theme.color.errColor};
-`;
-
-export const MoveBtn = styled.button`
-  font-size: 15px;
-  margin-top: 20px;
-  width: 410px;
-  height: 60px;
-  border-radius: 4px;
-  border: none;
-  border: 1px solid lightgray;
-  background-color: transparent;
-  cursor: pointer;
-
-  > .bold {
-    font-weight: 600;
-  }
 `;

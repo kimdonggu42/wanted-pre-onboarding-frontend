@@ -23,7 +23,12 @@ function Signin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signin(formValue.email, formValue.password, formValid.emailValid, formValid.passwordValid);
+    await signin(
+      formValue.email,
+      formValue.password,
+      formValid.emailValid,
+      formValid.passwordValid,
+    );
   };
 
   return (

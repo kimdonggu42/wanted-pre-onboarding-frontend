@@ -16,8 +16,10 @@ export const useSignup = () => {
           email,
           password,
         };
-        await BASE_API.post(`/auth/signup`, signUpForm);
-        navigate('/');
+        const res = await BASE_API.post(`/auth/signup`, signUpForm);
+        if (res.status === 201) {
+          navigate('/signin');
+        }
       }
     } catch (err: any) {
       if (err.response.status === 400) {

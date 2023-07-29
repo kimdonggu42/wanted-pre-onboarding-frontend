@@ -23,7 +23,12 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup(formValue.email, formValue.password, formValid.emailValid, formValid.passwordValid);
+    await signup(
+      formValue.email,
+      formValue.password,
+      formValid.emailValid,
+      formValid.passwordValid,
+    );
   };
 
   return (
@@ -40,7 +45,7 @@ function Signup() {
         submitBtnName={'회원가입'}
         dataTestId={'signup-button'}
       />
-      <Link to='/'>
+      <Link to='/signin'>
         <Styled.MoveBtn>
           계정이 있으신가요? <span className='bold'>로그인</span>
         </Styled.MoveBtn>

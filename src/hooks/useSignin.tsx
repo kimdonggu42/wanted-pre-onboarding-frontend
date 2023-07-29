@@ -1,11 +1,11 @@
-import { BASE_API } from '../util/instance';
+import { BASE_API } from '../util/api';
 
 export const useSignin = () => {
   const signin = async (
     email: string,
     password: string,
     emailValid: boolean,
-    passwordValid: boolean
+    passwordValid: boolean,
   ) => {
     try {
       if (emailValid && passwordValid) {

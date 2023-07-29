@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import styled from 'styled-components';
-import { TOKEN_API } from '../../util/instance';
-import { TodoType } from '../../util/type';
+import { TOKEN_API } from '../../util/api';
+import { TodoType } from '../../util/interface';
 import TodoList from './TodoList';
 
 const TodoContainer = styled.div`
@@ -129,16 +129,16 @@ function TodoMain() {
       <TodoArea>
         <TodoTitle>
           TODO LIST
-          <FiLogOut className="logoutBtn" size={21} onClick={logOut} />
+          <FiLogOut className='logoutBtn' size={21} onClick={logOut} />
         </TodoTitle>
         <TodoInputArea>
           <TodoInput
-            data-testid="new-todo-input"
-            placeholder="할 일을 입력해 주세요."
+            data-testid='new-todo-input'
+            placeholder='할 일을 입력해 주세요.'
             value={todoBody}
             onChange={onChangeTodoBody}
           />
-          <TodoAddBtn data-testid="new-todo-add-button" onClick={addTodoText}>
+          <TodoAddBtn data-testid='new-todo-add-button' onClick={addTodoText}>
             추가
           </TodoAddBtn>
         </TodoInputArea>
@@ -146,13 +146,7 @@ function TodoMain() {
           {todoData.length !== 0 ? (
             <>
               {reverseTodoData.map((value) => {
-                return (
-                  <TodoList
-                    list={value}
-                    key={value.id}
-                    getTodoData={getTodoData}
-                  />
-                );
+                return <TodoList list={value} key={value.id} getTodoData={getTodoData} />;
               })}
             </>
           ) : (

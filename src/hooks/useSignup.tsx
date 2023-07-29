@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { BASE_API } from '../util/instance';
+import { BASE_API } from '../util/api';
 
 export const useSignup = () => {
   const navigate = useNavigate();
@@ -8,7 +8,7 @@ export const useSignup = () => {
     email: string,
     password: string,
     emailValid: boolean,
-    passwordValid: boolean
+    passwordValid: boolean,
   ) => {
     try {
       if (emailValid && passwordValid) {

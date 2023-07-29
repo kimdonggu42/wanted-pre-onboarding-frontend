@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { AuthFormTypeProps } from '../util/type';
+import { AuthFormTypeProps } from '../util/interface';
 
 export const Form = styled.form`
   display: flex;
@@ -110,20 +110,18 @@ function AuthForm({
   return (
     <Form onSubmit={handleSubmit}>
       <EmailInput
-        data-testid="email-input"
-        type="email"
+        data-testid='email-input'
+        type='email'
         value={formValue.email}
-        placeholder="이메일을 입력해 주세요"
+        placeholder='이메일을 입력해 주세요'
         onChange={onChangeInput}
       />
-      {formValid.emailValid === false && (
-        <ErrMessage>{formErrMessage.emailErrMessage}</ErrMessage>
-      )}
+      {formValid.emailValid === false && <ErrMessage>{formErrMessage.emailErrMessage}</ErrMessage>}
       <PasswordInput
-        data-testid="password-input"
-        type="password"
+        data-testid='password-input'
+        type='password'
         value={formValue.password}
-        placeholder="비밀번호를 입력해 주세요"
+        placeholder='비밀번호를 입력해 주세요'
         onChange={onChangeInput}
       />
       {formValid.passwordValid === false && (
@@ -131,10 +129,8 @@ function AuthForm({
       )}
       <SubmitBtn
         data-testid={dataTestId}
-        type="submit"
-        disabled={
-          formValid.emailValid === false || formValid.passwordValid === false
-        }
+        type='submit'
+        disabled={formValid.emailValid === false || formValid.passwordValid === false}
       >
         {submitBtnName}
       </SubmitBtn>

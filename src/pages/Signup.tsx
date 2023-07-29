@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import AuthForm from '../components/AuthForm';
 import { useSignup } from '../hooks/useSignup';
-import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
+import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
 
 export const FormContainer = styled.div`
   height: 100vh;
@@ -53,12 +53,7 @@ function Signup() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signup(
-      formValue.email,
-      formValue.password,
-      formValid.emailValid,
-      formValid.passwordValid
-    );
+    signup(formValue.email, formValue.password, formValid.emailValid, formValid.passwordValid);
   };
 
   return (
@@ -75,9 +70,9 @@ function Signup() {
         submitBtnName={'회원가입'}
         dataTestId={'signup-button'}
       />
-      <Link to="/">
+      <Link to='/'>
         <MoveBtn>
-          계정이 있으신가요? <span className="bold">로그인</span>
+          계정이 있으신가요? <span className='bold'>로그인</span>
         </MoveBtn>
       </Link>
     </FormContainer>

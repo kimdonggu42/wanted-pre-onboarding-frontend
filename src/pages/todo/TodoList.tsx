@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import styled from 'styled-components';
-import { TOKEN_API } from '../../util/instance';
-import { TodoTypeProps } from '../../util/type';
+import { TOKEN_API } from '../../util/api';
+import { TodoTypeProps } from '../../util/interface';
 
 const TodoItem = styled.li`
   display: flex;
@@ -133,14 +133,14 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
       <Label htmlFor={`todo_${list.id}`}>
         <Checkbox
           id={`todo_${list.id}`}
-          type="checkbox"
+          type='checkbox'
           checked={list.isCompleted}
           onChange={() => updateTodoCheck(list.id)}
         />
         {isEditBtnClick ? (
           <EditTodoBodyInput
-            data-testid="modify-input"
-            type="text"
+            data-testid='modify-input'
+            type='text'
             value={editEditTodoInput}
             onChange={onChangeEditTodoInput}
           />
@@ -150,32 +150,20 @@ function TodoList({ list, getTodoData }: TodoTypeProps) {
       </Label>
       <ButtonArea>
         {isEditBtnClick ? (
-          <EditOrSubmitBtn
-            data-testid="submit-button"
-            onClick={() => updateEditTodoInput(list.id)}
-          >
+          <EditOrSubmitBtn data-testid='submit-button' onClick={() => updateEditTodoInput(list.id)}>
             제출
           </EditOrSubmitBtn>
         ) : (
-          <EditOrSubmitBtn
-            data-testid="modify-button"
-            onClick={changeEditModeBtn}
-          >
+          <EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
             수정
           </EditOrSubmitBtn>
         )}
         {isEditBtnClick ? (
-          <DeleteOrCancelBtn
-            data-testid="cancel-button"
-            onClick={editModeCancelBtn}
-          >
+          <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
             취소
           </DeleteOrCancelBtn>
         ) : (
-          <DeleteOrCancelBtn
-            data-testid="delete-button"
-            onClick={() => deleteTodo(list.id)}
-          >
+          <DeleteOrCancelBtn data-testid='delete-button' onClick={() => deleteTodo(list.id)}>
             삭제
           </DeleteOrCancelBtn>
         )}

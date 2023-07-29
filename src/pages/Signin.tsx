@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import { useSignin } from '../hooks/useSignin';
-import { FormValueType, FormValidType, FormErrMessageType } from '../util/type';
+import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
 import * as Signup from './Signup';
 
 function Signin() {
@@ -23,12 +23,7 @@ function Signin() {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    signin(
-      formValue.email,
-      formValue.password,
-      formValid.emailValid,
-      formValid.passwordValid
-    );
+    signin(formValue.email, formValue.password, formValid.emailValid, formValid.passwordValid);
   };
 
   return (
@@ -45,9 +40,9 @@ function Signin() {
         submitBtnName={'로그인'}
         dataTestId={'signin-button'}
       />
-      <Link to="/signup">
+      <Link to='/signup'>
         <Signup.MoveBtn>
-          계정이 없으신가요? <span className="bold">가입하기</span>
+          계정이 없으신가요? <span className='bold'>가입하기</span>
         </Signup.MoveBtn>
       </Link>
     </Signup.FormContainer>

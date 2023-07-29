@@ -83,7 +83,7 @@ export const SubmitBtn = styled.button`
   color: white;
   font-size: 15px;
   font-weight: 600;
-  background-color: ${(props) => props.theme.color.mainColor};
+  background-color: #576cbc;
   cursor: pointer;
 
   &:hover {
@@ -98,5 +98,5 @@ export const SubmitBtn = styled.button`
 export const ErrMessage = styled.div`
   margin-top: 5px;
   font-size: 14px;
-  color: ${(props) => props.theme.color.errColor};
+  color: #cd1818;
 `;

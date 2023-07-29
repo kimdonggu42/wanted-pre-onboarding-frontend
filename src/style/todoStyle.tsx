@@ -97,7 +97,7 @@ export const Label = styled.label`
 export const Checkbox = styled.input`
   min-width: 15px;
   min-height: 15px;
-  accent-color: ${(props) => props.theme.color.mainColor};
+  accent-color: #576cbc;
   cursor: pointer;
 `;
 
@@ -136,12 +136,12 @@ export const ButtonArea = styled.div`
 
 export const EditOrSubmitBtn = styled.button`
   color: white;
-  outline: 1px solid ${(props) => props.theme.color.mainColor};
-  background-color: ${(props) => props.theme.color.mainColor};
+  outline: 1px solid #576cbc;
+  background-color: #576cbc;
 `;
 
 export const DeleteOrCancelBtn = styled.button`
-  color: ${(props) => props.theme.color.mainColor};
-  outline: 1.1px solid ${(props) => props.theme.color.mainColor};
+  color: #576cbc;
+  outline: 1.1px solid #576cbc;
   background-color: transparent;
 `;

@@ -11,19 +11,10 @@ export function Router() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<Main />} />
-        <Route
-          path='/signup'
-          element={isLogin ? <Navigate to='/todo' replace={true} /> : <Signup />}
-        />
-        <Route
-          path='/signin'
-          element={isLogin ? <Navigate to='/todo' replace={true} /> : <Signin />}
-        />
-        <Route
-          path='/todo'
-          element={isLogin ? <TodoList /> : <Navigate to='/signin' replace={true} />}
-        />
-        <Route path='*' element={<Navigate to='/' replace={true} />} />
+        <Route path='/signup' element={isLogin ? <Navigate to='/todo' /> : <Signup />} />
+        <Route path='/signin' element={isLogin ? <Navigate to='/todo' /> : <Signin />} />
+        <Route path='/todo' element={isLogin ? <TodoList /> : <Navigate to='/signin' />} />
+        <Route path='*' element={<Navigate to='/' />} />
       </Routes>
     </BrowserRouter>
   );

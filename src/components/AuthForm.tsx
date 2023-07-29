@@ -40,7 +40,7 @@ function AuthForm({
 
   return (
     <Styled.Form onSubmit={handleSubmit}>
-      <Styled.EmailInput
+      <Styled.FormInput
         data-testid='email-input'
         type='text'
         value={formValue.email}
@@ -50,7 +50,7 @@ function AuthForm({
       {formValid.emailValid === false && (
         <Styled.ErrMessage>{formErrMessage.emailErrMessage}</Styled.ErrMessage>
       )}
-      <Styled.PasswordInput
+      <Styled.FormInput
         data-testid='password-input'
         type='password'
         value={formValue.password}

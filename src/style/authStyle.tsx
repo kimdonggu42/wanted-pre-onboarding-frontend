@@ -65,27 +65,12 @@ export const Form = styled.form`
   border: 1px solid lightgray;
 `;
 
-export const EmailInput = styled.input`
+export const FormInput = styled.input`
   font-size: 14px;
   width: 100%;
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
-  border: none;
-  border: 1px solid lightgray;
-
-  &:focus {
-    outline: none;
-  }
-`;
-
-export const PasswordInput = styled.input`
-  font-size: 14px;
-  width: 100%;
-  height: 50px;
-  border-radius: 4px;
-  padding: 10px 8px 10px 8px;
-
   border: none;
   border: 1px solid lightgray;
 

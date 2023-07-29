@@ -82,7 +82,7 @@ function AuthForm({
   dataTestId,
 }: AuthFormTypeProps) {
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.type === 'email') {
+    if (e.target.type === 'text') {
       setFormValue({ ...formValue, email: e.target.value });
       if (e.target.value.includes('@')) {
         setFormValid({ ...formValid, emailValid: true });
@@ -111,7 +111,7 @@ function AuthForm({
     <Form onSubmit={handleSubmit}>
       <EmailInput
         data-testid='email-input'
-        type='email'
+        type='text'
         value={formValue.email}
         placeholder='이메일을 입력해 주세요'
         onChange={onChangeInput}

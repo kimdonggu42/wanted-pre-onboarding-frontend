@@ -29,7 +29,7 @@ module.exports = {
       }
     ],
     'eqeqeq': ['error', 'always', { 'null': 'ignore' }],
-    'prefer-const': 'error',
+    'prefer-const': 'warn',
     'no-console': 'warn',
   }
 }

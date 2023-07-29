@@ -1,5 +1,24 @@
 import styled from 'styled-components';
 
+// Main
+export const LocationContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  row-gap: 20px;
+  padding: 30px;
+  width: 90vw;
+  max-width: 410px;
+  border-radius: 4px;
+  border: none;
+  border: 1px solid lightgray;
+
+  > a {
+    width: 100%;
+  }
+`;
+
 // Signup
 export const FormContainer = styled.div`
   height: 100vh;
@@ -37,6 +56,7 @@ export const Form = styled.form`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  row-gap: 7px;
   padding: 30px;
   width: 90vw;
   max-width: 410px;
@@ -65,7 +85,7 @@ export const PasswordInput = styled.input`
   height: 50px;
   border-radius: 4px;
   padding: 10px 8px 10px 8px;
-  margin-top: 10px;
+
   border: none;
   border: 1px solid lightgray;
 
@@ -79,7 +99,6 @@ export const SubmitBtn = styled.button`
   height: 45px;
   border: none;
   border-radius: 4px;
-  margin-top: 20px;
   color: white;
   font-size: 15px;
   font-weight: 600;
@@ -96,7 +115,6 @@ export const SubmitBtn = styled.button`
 `;
 
 export const ErrMessage = styled.div`
-  margin-top: 5px;
   font-size: 14px;
   color: #cd1818;
 `;

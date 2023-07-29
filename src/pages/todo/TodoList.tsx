@@ -1,174 +1,83 @@
-import { useState } from 'react';
-import styled from 'styled-components';
+import { useState, useEffect } from 'react';
+import { FiLogOut } from 'react-icons/fi';
+import * as Styled from '../../style/todoStyle';
 import { TOKEN_API } from '../../util/api';
-import { TodoTypeProps } from '../../util/interface';
+import { TodoType } from '../../util/interface';
+import TodoItem from './TodoItem';
 
-const TodoItem = styled.li`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 50px;
-  list-style: none;
-  border-bottom: 1px solid #ebebeb;
-`;
+function TodoList() {
+  const [todoData, setTodoData] = useState<TodoType[]>([]);
+  const [todoBody, setTodoBody] = useState<string>('');
 
-const Label = styled.label`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-`;
+  const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
 
-const Checkbox = styled.input`
-  min-width: 15px;
-  min-height: 15px;
-  accent-color: ${(props) => props.theme.color.mainColor};
-  cursor: pointer;
-`;
-
-const EditTodoBodyInput = styled.input`
-  padding: 7px 5px 7px 5px;
-  border-radius: 4px;
-  border: none;
-  width: 100%;
-  margin: 0 10px 0 10px;
-  outline: 1px solid lightgray;
-`;
-
-const TodoBody = styled.div`
-  font-size: 15px;
-  width: 100%;
-  margin: 0 10px 0 10px;
-  word-break: break-all;
-`;
-
-const ButtonArea = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  column-gap: 10px;
-
-  > button {
-    width: 40px;
-    height: 25px;
-    font-size: 13px;
-    font-weight: 600;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-`;
-
-const EditOrSubmitBtn = styled.button`
-  color: white;
-  outline: 1px solid ${(props) => props.theme.color.mainColor};
-  background-color: ${(props) => props.theme.color.mainColor};
-`;
-
-const DeleteOrCancelBtn = styled.button`
-  color: ${(props) => props.theme.color.mainColor};
-  outline: 1.1px solid ${(props) => props.theme.color.mainColor};
-  background-color: transparent;
-`;
-
-function TodoList({ list, getTodoData }: TodoTypeProps) {
-  const [editEditTodoInput, setEditTodoInput] = useState<string>(list.todo);
-  const [isEditBtnClick, setIsEditBtnClick] = useState<boolean>(false);
-
-  const updateEditTodoInput = async (id: number) => {
+  const getTodoData = async () => {
     try {
-      if (editEditTodoInput.length !== 0) {
-        const editTodo = {
-          todo: editEditTodoInput,
-          isCompleted: list.isCompleted,
-        };
-        await TOKEN_API.put(`/todos/${id}`, editTodo);
+      const res = await TOKEN_API.get('/todos');
+      setTodoData(res.data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+  useEffect(() => {
+    getTodoData();
+  }, []);
+
+  const onChangeTodoBody = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoBody(e.target.value);
+  };
+
+  const addTodoText = async () => {
+    try {
+      const newTodo = {
+        todo: todoBody,
+      };
+      if (todoBody) {
+        await TOKEN_API.post('/todos', newTodo);
         getTodoData();
-        setIsEditBtnClick(false);
-      } else {
-        alert('수정할 내용이 비어있습니다.');
+        setTodoBody('');
       }
     } catch (err) {
       console.error(err);
     }
   };
 
-  const updateTodoCheck = async (id: number) => {
-    try {
-      const editTodo = {
-        todo: list.todo,
-        isCompleted: !list.isCompleted,
-      };
-      await TOKEN_API.put(`/todos/${id}`, editTodo);
-      getTodoData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const deleteTodo = async (id: number) => {
-    try {
-      await TOKEN_API.delete(`/todos/${id}`);
-      getTodoData();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const onChangeEditTodoInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEditTodoInput(e.target.value);
-  };
-
-  const changeEditModeBtn = () => {
-    setIsEditBtnClick(!isEditBtnClick);
-  };
-
-  const editModeCancelBtn = () => {
-    setIsEditBtnClick(!isEditBtnClick);
-    setEditTodoInput(list.todo);
+  const logOut = () => {
+    localStorage.removeItem('accessToken');
+    window.location.reload();
   };
 
   return (
-    <TodoItem>
-      <Label htmlFor={`todo_${list.id}`}>
-        <Checkbox
-          id={`todo_${list.id}`}
-          type='checkbox'
-          checked={list.isCompleted}
-          onChange={() => updateTodoCheck(list.id)}
-        />
-        {isEditBtnClick ? (
-          <EditTodoBodyInput
-            data-testid='modify-input'
-            type='text'
-            value={editEditTodoInput}
-            onChange={onChangeEditTodoInput}
+    <Styled.TodoContainer>
+      <Styled.TodoArea>
+        <Styled.TodoTitle>
+          TODO LIST
+          <FiLogOut className='logoutBtn' size={21} onClick={logOut} />
+        </Styled.TodoTitle>
+        <Styled.TodoInputArea>
+          <Styled.TodoInput
+            data-testid='new-todo-input'
+            placeholder='할 일을 입력해 주세요.'
+            value={todoBody}
+            onChange={onChangeTodoBody}
           />
-        ) : (
-          <TodoBody>{list.todo}</TodoBody>
-        )}
-      </Label>
-      <ButtonArea>
-        {isEditBtnClick ? (
-          <EditOrSubmitBtn data-testid='submit-button' onClick={() => updateEditTodoInput(list.id)}>
-            제출
-          </EditOrSubmitBtn>
-        ) : (
-          <EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
-            수정
-          </EditOrSubmitBtn>
-        )}
-        {isEditBtnClick ? (
-          <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
-            취소
-          </DeleteOrCancelBtn>
-        ) : (
-          <DeleteOrCancelBtn data-testid='delete-button' onClick={() => deleteTodo(list.id)}>
-            삭제
-          </DeleteOrCancelBtn>
-        )}
-      </ButtonArea>
-    </TodoItem>
+          <Styled.TodoAddBtn data-testid='new-todo-add-button' onClick={addTodoText}>
+            추가
+          </Styled.TodoAddBtn>
+        </Styled.TodoInputArea>
+        <Styled.TodoListArea>
+          {todoData.length !== 0 ? (
+            <>
+              {reverseTodoData.map((value) => {
+                return <TodoItem list={value} key={value.id} getTodoData={getTodoData} />;
+              })}
+            </>
+          ) : (
+            <Styled.EmptyTodoWord>아직 추가된 할 일이 없습니다.</Styled.EmptyTodoWord>
+          )}
+        </Styled.TodoListArea>
+      </Styled.TodoArea>
+    </Styled.TodoContainer>
   );
 }
 

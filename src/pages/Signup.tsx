@@ -1,39 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import styled from 'styled-components';
 import AuthForm from '../components/AuthForm';
 import { useSignup } from '../hooks/useSignup';
+import * as Styled from '../style/authStyle';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
-
-export const FormContainer = styled.div`
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  flex-direction: column;
-`;
-
-export const FormName = styled.div`
-  font-size: 30px;
-  font-weight: bolder;
-  margin-bottom: 20px;
-`;
-
-export const MoveBtn = styled.button`
-  font-size: 15px;
-  margin-top: 20px;
-  width: 410px;
-  height: 60px;
-  border-radius: 4px;
-  border: none;
-  border: 1px solid lightgray;
-  background-color: transparent;
-  cursor: pointer;
-
-  > .bold {
-    font-weight: 600;
-  }
-`;
 
 function Signup() {
   const [formValue, setFormValue] = useState<FormValueType>({
@@ -57,8 +27,8 @@ function Signup() {
   };
 
   return (
-    <FormContainer>
-      <FormName>회원가입</FormName>
+    <Styled.FormContainer>
+      <Styled.FormName>회원가입</Styled.FormName>
       <AuthForm
         formValue={formValue}
         setFormValue={setFormValue}
@@ -71,11 +41,11 @@ function Signup() {
         dataTestId={'signup-button'}
       />
       <Link to='/'>
-        <MoveBtn>
+        <Styled.MoveBtn>
           계정이 있으신가요? <span className='bold'>로그인</span>
-        </MoveBtn>
+        </Styled.MoveBtn>
       </Link>
-    </FormContainer>
+    </Styled.FormContainer>
   );
 }
 

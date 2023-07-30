@@ -11,7 +11,7 @@ export function Router() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/' element={isLogin ? <Navigate to='/todo' /> : <Main />} />
+        <Route path='/' element={<Main />} />
         <Route path='/signup' element={isLogin ? <Navigate to='/todo' /> : <Signup />} />
         <Route path='/signin' element={isLogin ? <Navigate to='/todo' /> : <Signin />} />
         <Route path='/todo' element={isLogin ? <TodoList /> : <Navigate to='/signin' />} />

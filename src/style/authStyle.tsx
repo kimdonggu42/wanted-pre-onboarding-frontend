@@ -43,7 +43,6 @@ export const MoveBtn = styled.button`
   border: none;
   border: 1px solid lightgray;
   background-color: transparent;
-  cursor: pointer;
 
   > .bold {
     font-weight: 600;
@@ -88,7 +87,6 @@ export const SubmitBtn = styled.button`
   font-size: 15px;
   font-weight: 600;
   background-color: #576cbc;
-  cursor: pointer;
 
   &:hover {
     opacity: 0.8;

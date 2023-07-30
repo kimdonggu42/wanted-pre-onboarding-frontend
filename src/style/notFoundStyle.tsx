@@ -24,7 +24,6 @@ export const PrevPagebutton = styled.button`
   font-size: 17px;
   font-weight: 600;
   background-color: #576cbc;
-  cursor: pointer;
 
   &:hover {
     opacity: 0.8;

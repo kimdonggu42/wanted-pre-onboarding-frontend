@@ -42,7 +42,6 @@ function AuthForm({
     <Styled.Form onSubmit={handleSubmit}>
       <Styled.FormInput
         data-testid='email-input'
-        type='text'
         value={formValue.email}
         placeholder='이메일을 입력해 주세요'
         onChange={onChangeInput}

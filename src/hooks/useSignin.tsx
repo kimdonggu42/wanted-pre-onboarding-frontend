@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BASE_API } from '../util/api';
 
@@ -22,11 +23,9 @@ export const useSignin = () => {
           navigate('/todo');
         }
       }
-    } catch (err: any) {
-      if (err.response.status === 401) {
-        alert('이메일과 비밀번호를 다시 확인해 주세요.');
-      } else {
-        alert(err.message);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        alert(err.response?.data.message);
       }
     }
   };

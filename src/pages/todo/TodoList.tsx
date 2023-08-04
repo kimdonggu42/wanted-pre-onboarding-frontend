@@ -25,10 +25,6 @@ function TodoList() {
     getTodoData();
   }, []);
 
-  const onChangeTodoBody = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoBody(e.target.value);
-  };
-
   const addTodoText = async () => {
     try {
       const newTodo = {
@@ -42,6 +38,10 @@ function TodoList() {
     } catch (err) {
       console.error(err);
     }
+  };
+
+  const onChangeTodoBody = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTodoBody(e.target.value);
   };
 
   const logOut = () => {

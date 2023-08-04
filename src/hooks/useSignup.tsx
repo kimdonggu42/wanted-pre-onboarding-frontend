@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { BASE_API } from '../util/api';
 
@@ -21,11 +22,9 @@ export const useSignup = () => {
           navigate('/signin');
         }
       }
-    } catch (err: any) {
-      if (err.response.status === 400) {
-        alert('이미 사용 중인 이메일입니다.');
-      } else {
-        alert(err.message);
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        alert(err.response?.data.message);
       }
     }
   };

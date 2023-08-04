@@ -1,5 +1,5 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import { useSignup } from '../hooks/useSignup';
 import * as Styled from '../style/authStyle';
@@ -19,6 +19,7 @@ function Signup() {
     passwordErrMessage: '',
   });
 
+  const navigate = useNavigate();
   const { signup } = useSignup();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -30,6 +31,12 @@ function Signup() {
       formValid.passwordValid,
     );
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   return (
     <Styled.FormContainer>

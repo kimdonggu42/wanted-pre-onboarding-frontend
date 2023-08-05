@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import TodoItem from '../components/TodoItem';
+import { useGetTodo } from '../hooks/useGetTodo';
 import {
   TodoContainer,
   TodoArea,
@@ -16,25 +17,11 @@ import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
 
 function TodoList() {
-  const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
 
+  const { todoData, getTodoData } = useGetTodo('/todos');
   const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
   const navigate = useNavigate();
-
-  const getTodoData = async () => {
-    try {
-      const res = await TODO_API.get('/todos');
-      setTodoData(res.data);
-    } catch (err) {
-      alert(err);
-    }
-  };
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      getTodoData();
-    }
-  }, []);
 
   const addTodoText = async () => {
     try {

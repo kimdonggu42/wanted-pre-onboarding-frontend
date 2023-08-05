@@ -16,14 +16,14 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
   const [editEditTodoInput, setEditTodoInput] = useState<string>(list.todo);
   const [isEditBtnClick, setIsEditBtnClick] = useState<boolean>(false);
 
-  const updateEditTodoInput = async (id: number) => {
+  const updateEditTodoInput = async () => {
     try {
       if (editEditTodoInput.length !== 0) {
         const editTodo = {
           todo: editEditTodoInput,
           isCompleted: list.isCompleted,
         };
-        await TODO_API.put(`/todos/${id}`, editTodo);
+        await TODO_API.put(`/todos/${list.id}`, editTodo);
         getTodoData();
         setIsEditBtnClick(false);
       } else {
@@ -92,10 +92,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
       <ButtonArea>
         {isEditBtnClick ? (
           <>
-            <EditOrSubmitBtn
-              data-testid='submit-button'
-              onClick={() => updateEditTodoInput(list.id)}
-            >
+            <EditOrSubmitBtn data-testid='submit-button' onClick={updateEditTodoInput}>
               제출
             </EditOrSubmitBtn>
             <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>

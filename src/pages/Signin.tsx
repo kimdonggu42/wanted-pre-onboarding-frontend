@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
-import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import * as Styled from '../style/authStyle';
 import { BASE_API } from '../util/api';
@@ -20,8 +20,6 @@ function Signin() {
     passwordErrMessage: '',
   });
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -33,7 +31,6 @@ function Signin() {
         const res = await BASE_API.post(`/auth/signin`, signInForm);
         if (res.status === 200) {
           localStorage.setItem('accessToken', res.data.access_token);
-          navigate('/todo');
           window.location.reload();
         }
       }
@@ -43,12 +40,6 @@ function Signin() {
       }
     }
   };
-
-  useEffect(() => {
-    if (localStorage.getItem('accessToken')) {
-      navigate('/todo');
-    }
-  }, [navigate]);
 
   return (
     <Styled.FormContainer>

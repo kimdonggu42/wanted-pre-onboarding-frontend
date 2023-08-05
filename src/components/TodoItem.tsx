@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import * as Styled from '../../style/todoStyle';
-import { TOKEN_API } from '../../util/api';
-import { TodoTypeProps } from '../../util/interface';
+import * as Styled from '../style/todoStyle';
+import { TOKEN_API } from '../util/api';
+import { TodoTypeProps } from '../util/interface';
 
 function TodoItem({ list, getTodoData }: TodoTypeProps) {
   const [editEditTodoInput, setEditTodoInput] = useState<string>(list.todo);
@@ -25,22 +25,22 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
     }
   };
 
-  const updateTodoCheck = async (id: number) => {
+  const updateTodoCheck = async () => {
     try {
       const editTodo = {
         todo: list.todo,
         isCompleted: !list.isCompleted,
       };
-      await TOKEN_API.put(`/todos/${id}`, editTodo);
+      await TOKEN_API.put(`/todos/${list.id}`, editTodo);
       getTodoData();
     } catch (err) {
       alert(err);
     }
   };
 
-  const deleteTodo = async (id: number) => {
+  const deleteTodo = async () => {
     try {
-      await TOKEN_API.delete(`/todos/${id}`);
+      await TOKEN_API.delete(`/todos/${list.id}`);
       getTodoData();
     } catch (err) {
       alert(err);
@@ -56,7 +56,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
   };
 
   const editModeCancelBtn = () => {
-    setIsEditBtnClick(!isEditBtnClick);
+    changeEditModeBtn();
     setEditTodoInput(list.todo);
   };
 
@@ -67,7 +67,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
           id={`todo_${list.id}`}
           type='checkbox'
           checked={list.isCompleted}
-          onChange={() => updateTodoCheck(list.id)}
+          onChange={updateTodoCheck}
         />
         {isEditBtnClick ? (
           <Styled.EditTodoBodyInput
@@ -82,25 +82,26 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
       </Styled.Label>
       <Styled.ButtonArea>
         {isEditBtnClick ? (
-          <Styled.EditOrSubmitBtn
-            data-testid='submit-button'
-            onClick={() => updateEditTodoInput(list.id)}
-          >
-            제출
-          </Styled.EditOrSubmitBtn>
+          <>
+            <Styled.EditOrSubmitBtn
+              data-testid='submit-button'
+              onClick={() => updateEditTodoInput(list.id)}
+            >
+              제출
+            </Styled.EditOrSubmitBtn>
+            <Styled.DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
+              취소
+            </Styled.DeleteOrCancelBtn>
+          </>
         ) : (
-          <Styled.EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
-            수정
-          </Styled.EditOrSubmitBtn>
-        )}
-        {isEditBtnClick ? (
-          <Styled.DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
-            취소
-          </Styled.DeleteOrCancelBtn>
-        ) : (
-          <Styled.DeleteOrCancelBtn data-testid='delete-button' onClick={() => deleteTodo(list.id)}>
-            삭제
-          </Styled.DeleteOrCancelBtn>
+          <>
+            <Styled.EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
+              수정
+            </Styled.EditOrSubmitBtn>
+            <Styled.DeleteOrCancelBtn data-testid='delete-button' onClick={deleteTodo}>
+              삭제
+            </Styled.DeleteOrCancelBtn>
+          </>
         )}
       </Styled.ButtonArea>
     </Styled.TodoItemContainer>

@@ -1,15 +1,18 @@
 import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
-import * as Styled from '../../style/todoStyle';
-import { TOKEN_API } from '../../util/api';
-import { TodoType } from '../../util/interface';
-import TodoItem from './TodoItem';
+import { useNavigate } from 'react-router-dom';
+import TodoItem from '../components/TodoItem';
+// 스타일 각각 import
+import * as Styled from '../style/todoStyle';
+import { TOKEN_API } from '../util/api';
+import { TodoType } from '../util/interface';
 
 function TodoList() {
   const [todoData, setTodoData] = useState<TodoType[]>([]);
   const [todoBody, setTodoBody] = useState<string>('');
 
   const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
+  const navigate = useNavigate();
 
   const getTodoData = async () => {
     try {
@@ -27,10 +30,10 @@ function TodoList() {
 
   const addTodoText = async () => {
     try {
-      const newTodo = {
-        todo: todoBody,
-      };
       if (todoBody) {
+        const newTodo = {
+          todo: todoBody,
+        };
         await TOKEN_API.post('/todos', newTodo);
         getTodoData();
         setTodoBody('');
@@ -46,7 +49,8 @@ function TodoList() {
 
   const logOut = () => {
     localStorage.removeItem('accessToken');
-    window.location.reload();
+    // window.location.reload();
+    navigate('/signin');
   };
 
   return (
@@ -56,6 +60,7 @@ function TodoList() {
           TODO LIST
           <FiLogOut className='logoutBtn' size={21} onClick={logOut} />
         </Styled.TodoTitle>
+        {/* ------ */}
         <Styled.TodoInputArea>
           <Styled.TodoInput
             data-testid='new-todo-input'
@@ -67,6 +72,7 @@ function TodoList() {
             추가
           </Styled.TodoAddBtn>
         </Styled.TodoInputArea>
+        {/* 분리 ------ */}
         <Styled.TodoListArea>
           {todoData.length !== 0 ? (
             <>

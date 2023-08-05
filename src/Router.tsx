@@ -3,7 +3,7 @@ import Main from './pages/Main';
 import NotFoundError from './pages/NotFoundError';
 import Signin from './pages/Signin';
 import Signup from './pages/Signup';
-import TodoList from './pages/todo/TodoList';
+import TodoList from './pages/TodoList';
 
 export function Router() {
   const isLogin: string | null = localStorage.getItem('accessToken');

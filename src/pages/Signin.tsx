@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import * as Styled from '../style/authStyle';
 import { BASE_API } from '../util/api';
@@ -20,6 +20,7 @@ function Signin() {
     passwordErrMessage: '',
   });
 
+  const navigate = useNavigate();
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
@@ -31,6 +32,7 @@ function Signin() {
         const res = await BASE_API.post(`/auth/signin`, signInForm);
         if (res.status === 200) {
           localStorage.setItem('accessToken', res.data.access_token);
+          navigate('/todo');
           window.location.reload();
         }
       }

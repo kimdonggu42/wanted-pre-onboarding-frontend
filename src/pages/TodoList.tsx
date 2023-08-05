@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import TodoItem from '../components/TodoItem';
-import { useGetTodo } from '../hooks/useGetTodo';
+import { useGetTodos } from '../hooks/useGetTodo';
 import {
   TodoContainer,
   TodoArea,
@@ -19,18 +19,18 @@ import { TodoType } from '../util/interface';
 function TodoList() {
   const [todoBody, setTodoBody] = useState<string>('');
 
-  const { todoData, getTodoData } = useGetTodo('/todos');
-  const reverseTodoData: TodoType[] = todoData.sort((a, b) => b.id - a.id);
+  const { todos, getTodos } = useGetTodos('/todos');
+  const reverseTodoData: TodoType[] = todos.sort((a, b) => b.id - a.id);
   const navigate = useNavigate();
 
-  const addTodoText = async () => {
+  const createTodo = async () => {
     try {
       if (todoBody) {
         const newTodo = {
           todo: todoBody,
         };
         await TODO_API.post('/todos', newTodo);
-        getTodoData();
+        getTodos();
         setTodoBody('');
       }
     } catch (err) {
@@ -67,15 +67,15 @@ function TodoList() {
             value={todoBody}
             onChange={onChangeTodoBody}
           />
-          <TodoAddBtn data-testid='new-todo-add-button' onClick={addTodoText}>
+          <TodoAddBtn data-testid='new-todo-add-button' onClick={createTodo}>
             추가
           </TodoAddBtn>
         </TodoInputArea>
         <TodoListArea>
-          {todoData.length !== 0 ? (
+          {todos.length !== 0 ? (
             <>
               {reverseTodoData.map((value) => {
-                return <TodoItem list={value} key={value.id} getTodoData={getTodoData} />;
+                return <TodoItem list={value} key={value.id} getTodos={getTodos} />;
               })}
             </>
           ) : (

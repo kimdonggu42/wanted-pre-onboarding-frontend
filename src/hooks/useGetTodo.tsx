@@ -2,13 +2,13 @@ import { useEffect, useState } from 'react';
 import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
 
-export function useGetTodo(path: string) {
-  const [todoData, setTodoData] = useState<TodoType[]>([]);
+export function useGetTodos(path: string) {
+  const [todos, setTodos] = useState<TodoType[]>([]);
 
-  const getTodoData = async () => {
+  const getTodos = async () => {
     try {
       const res = await TODO_API.get(path);
-      setTodoData(res.data);
+      setTodos(res.data);
     } catch (err) {
       alert(err);
     }
@@ -16,9 +16,9 @@ export function useGetTodo(path: string) {
 
   useEffect(() => {
     if (path) {
-      getTodoData();
+      getTodos();
     }
   }, [path]);
 
-  return { todoData, getTodoData };
+  return { todos, getTodos };
 }

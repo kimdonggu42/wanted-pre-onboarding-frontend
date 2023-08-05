@@ -12,20 +12,20 @@ import {
 import { TODO_API } from '../util/api';
 import { TodoTypeProps } from '../util/interface';
 
-function TodoItem({ list, getTodoData }: TodoTypeProps) {
-  const [editEditTodoInput, setEditTodoInput] = useState<string>(list.todo);
-  const [isEditBtnClick, setIsEditBtnClick] = useState<boolean>(false);
+function TodoItem({ list, getTodos }: TodoTypeProps) {
+  const [editTodoInput, setEditTodoInput] = useState<string>(list.todo);
+  const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
-  const updateEditTodoInput = async () => {
+  const updateTodo = async () => {
     try {
-      if (editEditTodoInput.length !== 0) {
+      if (editTodoInput.length !== 0) {
         const editTodo = {
-          todo: editEditTodoInput,
+          todo: editTodoInput,
           isCompleted: list.isCompleted,
         };
         await TODO_API.put(`/todos/${list.id}`, editTodo);
-        getTodoData();
-        setIsEditBtnClick(false);
+        getTodos();
+        setIsEditMode(false);
       } else {
         alert('수정할 내용이 비어있습니다.');
       }
@@ -41,7 +41,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
         isCompleted: !list.isCompleted,
       };
       await TODO_API.put(`/todos/${list.id}`, editTodo);
-      getTodoData();
+      getTodos();
     } catch (err) {
       alert(err);
     }
@@ -50,7 +50,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
   const deleteTodo = async () => {
     try {
       await TODO_API.delete(`/todos/${list.id}`);
-      getTodoData();
+      getTodos();
     } catch (err) {
       alert(err);
     }
@@ -61,7 +61,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
   };
 
   const changeEditModeBtn = () => {
-    setIsEditBtnClick(!isEditBtnClick);
+    setIsEditMode(!isEditMode);
   };
 
   const editModeCancelBtn = () => {
@@ -78,11 +78,11 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
           checked={list.isCompleted}
           onChange={updateTodoCheck}
         />
-        {isEditBtnClick ? (
+        {isEditMode ? (
           <EditTodoBodyInput
             data-testid='modify-input'
             type='text'
-            value={editEditTodoInput}
+            value={editTodoInput}
             onChange={onChangeEditTodoInput}
           />
         ) : (
@@ -90,9 +90,9 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
         )}
       </Label>
       <ButtonArea>
-        {isEditBtnClick ? (
+        {isEditMode ? (
           <>
-            <EditOrSubmitBtn data-testid='submit-button' onClick={updateEditTodoInput}>
+            <EditOrSubmitBtn data-testid='submit-button' onClick={updateTodo}>
               제출
             </EditOrSubmitBtn>
             <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>

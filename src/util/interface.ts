@@ -28,5 +28,5 @@ export interface TodoType {
 
 export interface TodoTypeProps {
   list: TodoType;
-  getTodoData: () => Promise<void>;
+  getTodos: () => Promise<void>;
 }

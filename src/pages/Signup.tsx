@@ -4,7 +4,7 @@ import { FormContainer, FormName, MoveBtn } from '../style/authStyle';
 import { TODO_API } from '../util/api';
 import { FormValueType } from '../util/interface';
 
-function Signup() {
+function SignUp() {
   const navigate = useNavigate();
 
   const reqSignIn = async (formValue: FormValueType) => {
@@ -27,4 +27,4 @@ function Signup() {
   );
 }
 
-export default Signup;
+export default SignUp;

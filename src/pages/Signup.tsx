@@ -1,8 +1,9 @@
+import { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
-import { useSignup } from '../hooks/useSignup';
 import * as Styled from '../style/authStyle';
+import { BASE_API } from '../util/api';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
 
 function Signup() {
@@ -20,16 +21,25 @@ function Signup() {
   });
 
   const navigate = useNavigate();
-  const { signup } = useSignup();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    await signup(
-      formValue.email,
-      formValue.password,
-      formValid.emailValid,
-      formValid.passwordValid,
-    );
+    try {
+      if (formValid.emailValid && formValid.passwordValid) {
+        const signUpForm = {
+          email: formValue.email,
+          password: formValue.password,
+        };
+        const res = await BASE_API.post(`/auth/signup`, signUpForm);
+        if (res.status === 201) {
+          navigate('/signin');
+        }
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        alert(err.response?.data.message);
+      }
+    }
   };
 
   useEffect(() => {

@@ -21,7 +21,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
         alert('수정할 내용이 비어있습니다.');
       }
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 
@@ -34,7 +34,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
       await TOKEN_API.put(`/todos/${id}`, editTodo);
       getTodoData();
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 
@@ -43,7 +43,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
       await TOKEN_API.delete(`/todos/${id}`);
       getTodoData();
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 

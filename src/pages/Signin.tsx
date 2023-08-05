@@ -34,6 +34,7 @@ function Signin() {
         if (res.status === 200) {
           localStorage.setItem('accessToken', res.data.access_token);
           navigate('/todo');
+          window.location.reload();
         }
       }
     } catch (err) {

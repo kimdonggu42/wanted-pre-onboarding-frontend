@@ -18,7 +18,7 @@ function TodoList() {
       const res = await TOKEN_API.get('/todos');
       setTodoData(res.data);
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
   useEffect(() => {
@@ -36,7 +36,7 @@ function TodoList() {
         setTodoBody('');
       }
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 

@@ -24,8 +24,8 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
           isCompleted: list.isCompleted,
         };
         await TODO_API.put(`/todos/${list.id}`, editTodo);
-        getTodos();
         setIsEditMode(false);
+        getTodos();
       } else {
         alert('수정할 내용이 비어있습니다.');
       }
@@ -60,12 +60,12 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
     setEditTodoInput(e.target.value);
   };
 
-  const changeEditModeBtn = () => {
-    setIsEditMode(!isEditMode);
+  const editModeActivate = () => {
+    setIsEditMode(true);
   };
 
-  const editModeCancelBtn = () => {
-    changeEditModeBtn();
+  const editModeCancel = () => {
+    setIsEditMode(false);
     setEditTodoInput(list.todo);
   };
 
@@ -95,13 +95,13 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
             <EditOrSubmitBtn data-testid='submit-button' onClick={updateTodo}>
               제출
             </EditOrSubmitBtn>
-            <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
+            <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancel}>
               취소
             </DeleteOrCancelBtn>
           </>
         ) : (
           <>
-            <EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
+            <EditOrSubmitBtn data-testid='modify-button' onClick={editModeActivate}>
               수정
             </EditOrSubmitBtn>
             <DeleteOrCancelBtn data-testid='delete-button' onClick={deleteTodo}>

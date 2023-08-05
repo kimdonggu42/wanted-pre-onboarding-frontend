@@ -6,7 +6,7 @@ import SignUp from './pages/SignUp';
 import TodoList from './pages/TodoList';
 
 export function Router() {
-  const isLogin: string | null = localStorage.getItem('accessToken');
+  const isLogin = localStorage.getItem('accessToken');
 
   return (
     <BrowserRouter>

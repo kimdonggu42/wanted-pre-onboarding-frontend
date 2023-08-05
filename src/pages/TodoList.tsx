@@ -11,7 +11,6 @@ import {
   TodoInput,
   TodoAddBtn,
   TodoListArea,
-  EmptyTodoWord,
 } from '../style/todoStyle';
 import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
@@ -19,9 +18,9 @@ import { TodoType } from '../util/interface';
 function TodoList() {
   const [todoBody, setTodoBody] = useState<string>('');
 
+  const navigate = useNavigate();
   const { todos, getTodos } = useGetTodos('/todos');
   const reverseTodoData: TodoType[] = todos.sort((a, b) => b.id - a.id);
-  const navigate = useNavigate();
 
   const createTodo = async () => {
     try {
@@ -72,15 +71,9 @@ function TodoList() {
           </TodoAddBtn>
         </TodoInputArea>
         <TodoListArea>
-          {todos.length !== 0 ? (
-            <>
-              {reverseTodoData.map((value) => {
-                return <TodoItem list={value} key={value.id} getTodos={getTodos} />;
-              })}
-            </>
-          ) : (
-            <EmptyTodoWord>아직 추가된 할 일이 없습니다.</EmptyTodoWord>
-          )}
+          {reverseTodoData.map((value) => {
+            return <TodoItem list={value} key={value.id} getTodos={getTodos} />;
+          })}
         </TodoListArea>
       </TodoArea>
     </TodoContainer>

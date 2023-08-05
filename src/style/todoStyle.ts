@@ -70,12 +70,6 @@ export const TodoListArea = styled.ul`
   }
 `;
 
-export const EmptyTodoWord = styled.div`
-  text-align: center;
-  font-weight: 500;
-  margin-top: 50px;
-`;
-
 // TodoItem
 export const TodoItemContainer = styled.li`
   display: flex;

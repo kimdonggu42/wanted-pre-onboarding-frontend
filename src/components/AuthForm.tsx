@@ -74,6 +74,7 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
     <Form onSubmit={handleSubmit}>
       <FormInput
         data-testid='email-input'
+        type='text'
         value={formValue.email}
         placeholder='이메일을 입력해 주세요'
         onChange={onChangeInput}

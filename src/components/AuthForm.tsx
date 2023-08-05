@@ -1,17 +1,30 @@
+import { AxiosError } from 'axios';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as Styled from '../style/authStyle';
-import { AuthFormTypeProps } from '../util/interface';
+import {
+  AuthFormTypeProps,
+  FormValueType,
+  FormValidType,
+  FormErrMessageType,
+} from '../util/interface';
 
-function AuthForm({
-  formValue,
-  setFormValue,
-  formValid,
-  setFormValid,
-  formErrMessage,
-  setFormErrMessage,
-  handleSubmit,
-  submitBtnName,
-  dataTestId,
-}: AuthFormTypeProps) {
+function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
+  const [formValue, setFormValue] = useState<FormValueType>({
+    email: '',
+    password: '',
+  });
+  const [formValid, setFormValid] = useState<FormValidType>({
+    emailValid: false,
+    passwordValid: false,
+  });
+  const [formErrMessage, setFormErrMessage] = useState<FormErrMessageType>({
+    emailErrMessage: '',
+    passwordErrMessage: '',
+  });
+
+  const navigate = useNavigate();
+
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
       setFormValue({ ...formValue, email: e.target.value });
@@ -37,6 +50,25 @@ function AuthForm({
       }
     }
   };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    try {
+      if (formValid.emailValid && formValid.passwordValid) {
+        authReq(formValue);
+      }
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        alert(err.response?.data.message);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   return (
     <Styled.Form onSubmit={handleSubmit}>

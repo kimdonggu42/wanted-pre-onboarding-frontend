@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import * as Styled from '../style/authStyle';
@@ -41,6 +41,12 @@ function Signup() {
       }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   return (
     <Styled.FormContainer>

@@ -52,6 +52,12 @@ function TodoList() {
     navigate('/signin');
   };
 
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      navigate('/signin');
+    }
+  }, [navigate]);
+
   return (
     <Styled.TodoContainer>
       <Styled.TodoArea>

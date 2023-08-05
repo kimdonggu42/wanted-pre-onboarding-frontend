@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import * as Styled from '../style/notFoundStyle';
+import { NotFoundContainer, ErrorStateText, PrevPagebutton } from '../style/notFoundStyle';
 
 function NotFoundError() {
   const navigate = useNavigate();
@@ -9,10 +9,10 @@ function NotFoundError() {
   };
 
   return (
-    <Styled.NotFoundContainer>
-      <Styled.ErrorStateText>페이지를 찾을 수 없습니다.</Styled.ErrorStateText>
-      <Styled.PrevPagebutton onClick={prevPage}>이전 페이지로 돌아가기</Styled.PrevPagebutton>
-    </Styled.NotFoundContainer>
+    <NotFoundContainer>
+      <ErrorStateText>페이지를 찾을 수 없습니다.</ErrorStateText>
+      <PrevPagebutton onClick={prevPage}>이전 페이지로 돌아가기</PrevPagebutton>
+    </NotFoundContainer>
   );
 }
 

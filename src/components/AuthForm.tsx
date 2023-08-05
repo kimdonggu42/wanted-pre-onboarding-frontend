@@ -1,7 +1,7 @@
 import { AxiosError } from 'axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import * as Styled from '../style/authStyle';
+import { Form, FormInput, ErrMessage, SubmitBtn } from '../style/authStyle';
 import {
   AuthFormTypeProps,
   FormValueType,
@@ -71,17 +71,15 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
   }, [navigate]);
 
   return (
-    <Styled.Form onSubmit={handleSubmit}>
-      <Styled.FormInput
+    <Form onSubmit={handleSubmit}>
+      <FormInput
         data-testid='email-input'
         value={formValue.email}
         placeholder='이메일을 입력해 주세요'
         onChange={onChangeInput}
       />
-      {formValid.emailValid === false && (
-        <Styled.ErrMessage>{formErrMessage.emailErrMessage}</Styled.ErrMessage>
-      )}
-      <Styled.FormInput
+      {formValid.emailValid === false && <ErrMessage>{formErrMessage.emailErrMessage}</ErrMessage>}
+      <FormInput
         data-testid='password-input'
         type='password'
         value={formValue.password}
@@ -89,16 +87,16 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
         onChange={onChangeInput}
       />
       {formValid.passwordValid === false && (
-        <Styled.ErrMessage>{formErrMessage.passwordErrMessage}</Styled.ErrMessage>
+        <ErrMessage>{formErrMessage.passwordErrMessage}</ErrMessage>
       )}
-      <Styled.SubmitBtn
+      <SubmitBtn
         data-testid={dataTestId}
         type='submit'
         disabled={formValid.emailValid === false || formValid.passwordValid === false}
       >
         {submitBtnName}
-      </Styled.SubmitBtn>
-    </Styled.Form>
+      </SubmitBtn>
+    </Form>
   );
 }
 

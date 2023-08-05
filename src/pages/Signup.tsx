@@ -1,6 +1,6 @@
 import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
-import * as Styled from '../style/authStyle';
+import { FormContainer, FormName, MoveBtn } from '../style/authStyle';
 import { TODO_API } from '../util/api';
 import { FormValueType } from '../util/interface';
 
@@ -15,15 +15,15 @@ function Signup() {
   };
 
   return (
-    <Styled.FormContainer>
-      <Styled.FormName>회원가입</Styled.FormName>
+    <FormContainer>
+      <FormName>회원가입</FormName>
       <AuthForm submitBtnName={'회원가입'} dataTestId={'signup-button'} authReq={reqSignIn} />
       <Link to='/signin'>
-        <Styled.MoveBtn>
+        <MoveBtn>
           계정이 있으신가요? <span className='bold'>로그인</span>
-        </Styled.MoveBtn>
+        </MoveBtn>
       </Link>
-    </Styled.FormContainer>
+    </FormContainer>
   );
 }
 

@@ -1,19 +1,19 @@
 import { Link } from 'react-router-dom';
-import * as Styled from '../style/authStyle';
+import { FormContainer, FormName, LocationContainer, SubmitBtn } from '../style/authStyle';
 
 function Main() {
   return (
-    <Styled.FormContainer>
-      <Styled.FormName>TODO LIST</Styled.FormName>
-      <Styled.LocationContainer>
+    <FormContainer>
+      <FormName>TODO LIST</FormName>
+      <LocationContainer>
         <Link to='/signin'>
-          <Styled.SubmitBtn>로그인</Styled.SubmitBtn>
+          <SubmitBtn>로그인</SubmitBtn>
         </Link>
         <Link to='/signup'>
-          <Styled.SubmitBtn>회원가입</Styled.SubmitBtn>
+          <SubmitBtn>회원가입</SubmitBtn>
         </Link>
-      </Styled.LocationContainer>
-    </Styled.FormContainer>
+      </LocationContainer>
+    </FormContainer>
   );
 }
 

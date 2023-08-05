@@ -1,5 +1,14 @@
 import { useState } from 'react';
-import * as Styled from '../style/todoStyle';
+import {
+  TodoItemContainer,
+  Label,
+  Checkbox,
+  EditTodoBodyInput,
+  TodoBody,
+  ButtonArea,
+  EditOrSubmitBtn,
+  DeleteOrCancelBtn,
+} from '../style/todoStyle';
 import { TODO_API } from '../util/api';
 import { TodoTypeProps } from '../util/interface';
 
@@ -61,50 +70,50 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
   };
 
   return (
-    <Styled.TodoItemContainer>
-      <Styled.Label htmlFor={`todo_${list.id}`}>
-        <Styled.Checkbox
+    <TodoItemContainer>
+      <Label htmlFor={`todo_${list.id}`}>
+        <Checkbox
           id={`todo_${list.id}`}
           type='checkbox'
           checked={list.isCompleted}
           onChange={updateTodoCheck}
         />
         {isEditBtnClick ? (
-          <Styled.EditTodoBodyInput
+          <EditTodoBodyInput
             data-testid='modify-input'
             type='text'
             value={editEditTodoInput}
             onChange={onChangeEditTodoInput}
           />
         ) : (
-          <Styled.TodoBody>{list.todo}</Styled.TodoBody>
+          <TodoBody>{list.todo}</TodoBody>
         )}
-      </Styled.Label>
-      <Styled.ButtonArea>
+      </Label>
+      <ButtonArea>
         {isEditBtnClick ? (
           <>
-            <Styled.EditOrSubmitBtn
+            <EditOrSubmitBtn
               data-testid='submit-button'
               onClick={() => updateEditTodoInput(list.id)}
             >
               제출
-            </Styled.EditOrSubmitBtn>
-            <Styled.DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
+            </EditOrSubmitBtn>
+            <DeleteOrCancelBtn data-testid='cancel-button' onClick={editModeCancelBtn}>
               취소
-            </Styled.DeleteOrCancelBtn>
+            </DeleteOrCancelBtn>
           </>
         ) : (
           <>
-            <Styled.EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
+            <EditOrSubmitBtn data-testid='modify-button' onClick={changeEditModeBtn}>
               수정
-            </Styled.EditOrSubmitBtn>
-            <Styled.DeleteOrCancelBtn data-testid='delete-button' onClick={deleteTodo}>
+            </EditOrSubmitBtn>
+            <DeleteOrCancelBtn data-testid='delete-button' onClick={deleteTodo}>
               삭제
-            </Styled.DeleteOrCancelBtn>
+            </DeleteOrCancelBtn>
           </>
         )}
-      </Styled.ButtonArea>
-    </Styled.TodoItemContainer>
+      </ButtonArea>
+    </TodoItemContainer>
   );
 }
 

@@ -2,8 +2,16 @@ import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
 import { useNavigate } from 'react-router-dom';
 import TodoItem from '../components/TodoItem';
-// 스타일 각각 import
-import * as Styled from '../style/todoStyle';
+import {
+  TodoContainer,
+  TodoArea,
+  TodoTitle,
+  TodoInputArea,
+  TodoInput,
+  TodoAddBtn,
+  TodoListArea,
+  EmptyTodoWord,
+} from '../style/todoStyle';
 import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
 
@@ -59,26 +67,24 @@ function TodoList() {
   }, [navigate]);
 
   return (
-    <Styled.TodoContainer>
-      <Styled.TodoArea>
-        <Styled.TodoTitle>
+    <TodoContainer>
+      <TodoArea>
+        <TodoTitle>
           TODO LIST
           <FiLogOut className='logoutBtn' size={21} onClick={logOut} />
-        </Styled.TodoTitle>
-        {/* ------ */}
-        <Styled.TodoInputArea>
-          <Styled.TodoInput
+        </TodoTitle>
+        <TodoInputArea>
+          <TodoInput
             data-testid='new-todo-input'
             placeholder='할 일을 입력해 주세요.'
             value={todoBody}
             onChange={onChangeTodoBody}
           />
-          <Styled.TodoAddBtn data-testid='new-todo-add-button' onClick={addTodoText}>
+          <TodoAddBtn data-testid='new-todo-add-button' onClick={addTodoText}>
             추가
-          </Styled.TodoAddBtn>
-        </Styled.TodoInputArea>
-        {/* 분리 ------ */}
-        <Styled.TodoListArea>
+          </TodoAddBtn>
+        </TodoInputArea>
+        <TodoListArea>
           {todoData.length !== 0 ? (
             <>
               {reverseTodoData.map((value) => {
@@ -86,11 +92,11 @@ function TodoList() {
               })}
             </>
           ) : (
-            <Styled.EmptyTodoWord>아직 추가된 할 일이 없습니다.</Styled.EmptyTodoWord>
+            <EmptyTodoWord>아직 추가된 할 일이 없습니다.</EmptyTodoWord>
           )}
-        </Styled.TodoListArea>
-      </Styled.TodoArea>
-    </Styled.TodoContainer>
+        </TodoListArea>
+      </TodoArea>
+    </TodoContainer>
   );
 }
 

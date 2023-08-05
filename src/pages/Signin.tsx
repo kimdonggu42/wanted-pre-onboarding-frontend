@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import * as Styled from '../style/authStyle';
-import { BASE_API } from '../util/api';
+import { TODO_API } from '../util/api';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
 
 function Signin() {
@@ -29,7 +29,7 @@ function Signin() {
           email: formValue.email,
           password: formValue.password,
         };
-        const res = await BASE_API.post(`/auth/signin`, signInForm);
+        const res = await TODO_API.post(`/auth/signin`, signInForm);
         if (res.status === 200) {
           localStorage.setItem('accessToken', res.data.access_token);
           navigate('/todo');

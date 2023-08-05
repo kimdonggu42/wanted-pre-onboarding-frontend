@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import AuthForm from '../components/AuthForm';
 import * as Styled from '../style/authStyle';
-import { BASE_API } from '../util/api';
+import { TODO_API } from '../util/api';
 import { FormValueType, FormValidType, FormErrMessageType } from '../util/interface';
 
 function Signup() {
@@ -30,7 +30,7 @@ function Signup() {
           email: formValue.email,
           password: formValue.password,
         };
-        const res = await BASE_API.post(`/auth/signup`, signUpForm);
+        const res = await TODO_API.post(`/auth/signup`, signUpForm);
         if (res.status === 201) {
           navigate('/signin');
         }

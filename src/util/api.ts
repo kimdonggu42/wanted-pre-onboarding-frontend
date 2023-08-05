@@ -1,15 +1,22 @@
 import axios from 'axios';
 
 const BASE_URL = `https://www.pre-onboarding-selection-task.shop/`;
-const TOKEN: string | null = localStorage.getItem('accessToken');
 
-export const BASE_API = axios.create({
+export const TODO_API = axios.create({
   baseURL: BASE_URL,
 });
 
-export const TOKEN_API = axios.create({
-  baseURL: BASE_URL,
-  headers: {
-    Authorization: `Bearer ${TOKEN}`,
+TODO_API.interceptors.request.use(
+  (config) => {
+    const accessToken = localStorage.getItem('accessToken');
+
+    if (accessToken) {
+      config.headers.Authorization = `Bearer ${accessToken}`;
+    }
+    return config;
   },
-});
+  (err) => {
+    console.log(err);
+    return Promise.reject(err);
+  },
+);

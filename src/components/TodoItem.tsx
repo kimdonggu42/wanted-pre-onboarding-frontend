@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import * as Styled from '../style/todoStyle';
-import { TOKEN_API } from '../util/api';
+import { TODO_API } from '../util/api';
 import { TodoTypeProps } from '../util/interface';
 
 function TodoItem({ list, getTodoData }: TodoTypeProps) {
@@ -14,7 +14,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
           todo: editEditTodoInput,
           isCompleted: list.isCompleted,
         };
-        await TOKEN_API.put(`/todos/${id}`, editTodo);
+        await TODO_API.put(`/todos/${id}`, editTodo);
         getTodoData();
         setIsEditBtnClick(false);
       } else {
@@ -31,7 +31,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
         todo: list.todo,
         isCompleted: !list.isCompleted,
       };
-      await TOKEN_API.put(`/todos/${list.id}`, editTodo);
+      await TODO_API.put(`/todos/${list.id}`, editTodo);
       getTodoData();
     } catch (err) {
       alert(err);
@@ -40,7 +40,7 @@ function TodoItem({ list, getTodoData }: TodoTypeProps) {
 
   const deleteTodo = async () => {
     try {
-      await TOKEN_API.delete(`/todos/${list.id}`);
+      await TODO_API.delete(`/todos/${list.id}`);
       getTodoData();
     } catch (err) {
       alert(err);

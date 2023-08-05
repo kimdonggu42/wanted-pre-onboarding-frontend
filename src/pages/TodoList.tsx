@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import TodoItem from '../components/TodoItem';
 // 스타일 각각 import
 import * as Styled from '../style/todoStyle';
-import { TOKEN_API } from '../util/api';
+import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
 
 function TodoList() {
@@ -16,7 +16,7 @@ function TodoList() {
 
   const getTodoData = async () => {
     try {
-      const res = await TOKEN_API.get('/todos');
+      const res = await TODO_API.get('/todos');
       setTodoData(res.data);
     } catch (err) {
       alert(err);
@@ -34,7 +34,7 @@ function TodoList() {
         const newTodo = {
           todo: todoBody,
         };
-        await TOKEN_API.post('/todos', newTodo);
+        await TODO_API.post('/todos', newTodo);
         getTodoData();
         setTodoBody('');
       }
@@ -49,7 +49,6 @@ function TodoList() {
 
   const logOut = () => {
     localStorage.removeItem('accessToken');
-    // window.location.reload();
     navigate('/signin');
   };
 

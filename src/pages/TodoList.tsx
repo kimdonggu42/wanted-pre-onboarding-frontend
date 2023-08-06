@@ -56,7 +56,7 @@ function TodoList() {
     <TodoContainer>
       <TodoArea>
         <TodoTitle>
-          TODO LIST
+          Todo List
           <FiLogOut className='logoutBtn' size={21} onClick={logOut} />
         </TodoTitle>
         <TodoInputArea>

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {
   TodoItemContainer,
   Label,
@@ -16,6 +16,8 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
   const [editTodoInput, setEditTodoInput] = useState<string>(list.todo);
   const [isEditMode, setIsEditMode] = useState<boolean>(false);
 
+  const inputRef = useRef<HTMLInputElement>(null);
+
   const updateTodo = async () => {
     try {
       if (editTodoInput.length !== 0) {
@@ -28,6 +30,7 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
         setIsEditMode(false);
       } else {
         alert('수정할 내용이 비어있습니다.');
+        inputRef.current?.focus();
       }
     } catch (err) {
       alert(err);
@@ -62,12 +65,19 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
 
   const editModeActivate = () => {
     setIsEditMode(true);
+    inputRef.current?.focus();
   };
 
   const editModeCancel = () => {
     setIsEditMode(false);
     setEditTodoInput(list.todo);
   };
+
+  useEffect(() => {
+    if (isEditMode) {
+      inputRef.current?.focus();
+    }
+  }, [isEditMode]);
 
   return (
     <TodoItemContainer>
@@ -84,6 +94,7 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
             type='text'
             value={editTodoInput}
             onChange={onChangeEditTodoInput}
+            ref={inputRef}
           />
         ) : (
           <TodoBody>{list.todo}</TodoBody>

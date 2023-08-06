@@ -34,6 +34,8 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
       }
     } catch (err) {
       alert(err);
+      setIsEditMode(false);
+      setEditTodoInput(list.todo);
     }
   };
 
@@ -97,7 +99,7 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
             ref={inputRef}
           />
         ) : (
-          <TodoBody>{list.todo}</TodoBody>
+          <TodoBody>{editTodoInput}</TodoBody>
         )}
       </Label>
       <ButtonArea>

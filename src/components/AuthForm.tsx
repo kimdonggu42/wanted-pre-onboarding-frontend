@@ -55,7 +55,7 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
     e.preventDefault();
     try {
       if (formValid.emailValid && formValid.passwordValid) {
-        authReq(formValue);
+        await authReq(formValue);
       }
     } catch (err) {
       if (err instanceof AxiosError) {

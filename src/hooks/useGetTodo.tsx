@@ -10,7 +10,7 @@ export function useGetTodos(path: string) {
       const res = await TODO_API.get(path);
       setTodos(res.data);
     } catch (err) {
-      alert(err);
+      console.error(err);
     }
   };
 

@@ -101,6 +101,10 @@ export const EditTodoBodyInput = styled.input`
   width: 100%;
   margin: 0 10px 0 10px;
   outline: 1px solid lightgray;
+
+  &:focus {
+    outline: 2px solid #576cbc;
+  }
 `;
 
 export const TodoBody = styled.div`

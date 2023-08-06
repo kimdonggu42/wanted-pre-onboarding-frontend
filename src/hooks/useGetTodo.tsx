@@ -10,12 +10,12 @@ export function useGetTodos(path: string) {
       const res = await TODO_API.get(path);
       setTodos(res.data);
     } catch (err) {
-      console.error(err);
+      alert(err);
     }
   };
 
   useEffect(() => {
-    if (path) {
+    if (path && localStorage.getItem('accessToken')) {
       getTodos();
     }
   }, [path]);

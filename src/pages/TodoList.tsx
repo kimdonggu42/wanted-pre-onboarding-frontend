@@ -16,7 +16,7 @@ import { TODO_API } from '../util/api';
 import { TodoType } from '../util/interface';
 
 function TodoList() {
-  const [todoBody, setTodoBody] = useState<string>('');
+  const [newTodoInput, setNewTodoInput] = useState<string>('');
 
   const navigate = useNavigate();
   const { todos, getTodos } = useGetTodos('/todos');
@@ -24,13 +24,13 @@ function TodoList() {
 
   const createTodo = async () => {
     try {
-      if (todoBody) {
+      if (newTodoInput) {
         const newTodo = {
-          todo: todoBody,
+          todo: newTodoInput,
         };
         await TODO_API.post('/todos', newTodo);
         getTodos();
-        setTodoBody('');
+        setNewTodoInput('');
       }
     } catch (err) {
       alert(err);
@@ -38,7 +38,7 @@ function TodoList() {
   };
 
   const onChangeTodoBody = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTodoBody(e.target.value);
+    setNewTodoInput(e.target.value);
   };
 
   const logOut = () => {
@@ -63,7 +63,7 @@ function TodoList() {
           <TodoInput
             data-testid='new-todo-input'
             placeholder='할 일을 입력해 주세요.'
-            value={todoBody}
+            value={newTodoInput}
             onChange={onChangeTodoBody}
           />
           <TodoAddBtn data-testid='new-todo-add-button' onClick={createTodo}>

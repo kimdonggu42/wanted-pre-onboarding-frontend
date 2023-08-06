@@ -24,8 +24,8 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
           isCompleted: list.isCompleted,
         };
         await TODO_API.put(`/todos/${list.id}`, editTodo);
-        setIsEditMode(false);
         getTodos();
+        setIsEditMode(false);
       } else {
         alert('수정할 내용이 비어있습니다.');
       }
@@ -75,7 +75,7 @@ function TodoItem({ list, getTodos }: TodoTypeProps) {
         <Checkbox
           id={`todo_${list.id}`}
           type='checkbox'
-          checked={list.isCompleted}
+          defaultChecked={list.isCompleted}
           onChange={updateTodoCheck}
         />
         {isEditMode ? (

@@ -12,9 +12,9 @@ export function Router() {
     <BrowserRouter>
       <Routes>
         <Route path='/' element={isLogin ? <Navigate to='/todo' /> : <Main />} />
-        <Route path='/signup' element={<SignUp />} />
-        <Route path='/signin' element={<SignIn />} />
-        <Route path='/todo' element={<TodoList />} />
+        <Route path='/signup' element={isLogin ? <Navigate to='/todo' /> : <SignUp />} />
+        <Route path='/signin' element={isLogin ? <Navigate to='/todo' /> : <SignIn />} />
+        <Route path='/todo' element={isLogin ? <TodoList /> : <Navigate to='/signin' />} />
         <Route path='*' element={<NotFoundError />} />
       </Routes>
     </BrowserRouter>

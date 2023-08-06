@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FiLogOut } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
 import TodoItem from '../components/TodoItem';
 import { useGetTodos } from '../hooks/useGetTodo';
 import {
@@ -17,6 +18,7 @@ import { TodoType } from '../util/interface';
 function TodoList() {
   const [newTodoInput, setNewTodoInput] = useState<string>('');
 
+  const navigate = useNavigate();
   const { todos, getTodos } = useGetTodos('/todos');
   const reverseTodoData: TodoType[] = todos.sort((a, b) => b.id - a.id);
 
@@ -41,8 +43,14 @@ function TodoList() {
 
   const logOut = () => {
     localStorage.removeItem('accessToken');
-    window.location.reload();
+    navigate('/signin');
   };
+
+  useEffect(() => {
+    if (!localStorage.getItem('accessToken')) {
+      navigate('/signin');
+    }
+  }, [navigate]);
 
   return (
     <TodoContainer>

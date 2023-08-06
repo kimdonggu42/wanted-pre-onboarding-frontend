@@ -16,7 +16,6 @@ TODO_API.interceptors.request.use(
     return config;
   },
   (err) => {
-    console.error(err);
     return Promise.reject(err);
   },
 );

@@ -1,5 +1,6 @@
 import { AxiosError } from 'axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Form, FormInput, ErrMessage, SubmitBtn } from '../style/authStyle';
 import {
   AuthFormTypeProps,
@@ -21,6 +22,8 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
     emailErrMessage: '',
     passwordErrMessage: '',
   });
+
+  const navigate = useNavigate();
 
   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.type === 'text') {
@@ -60,6 +63,12 @@ function AuthForm({ submitBtnName, dataTestId, authReq }: AuthFormTypeProps) {
       }
     }
   };
+
+  useEffect(() => {
+    if (localStorage.getItem('accessToken')) {
+      navigate('/todo');
+    }
+  }, [navigate]);
 
   return (
     <Form onSubmit={handleSubmit}>
